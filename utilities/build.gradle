@@ -4,8 +4,18 @@
 
 plugins {
     id 'it.unicam.ids.dharma.java-library-conventions'
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
     api project(':list')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
 }
