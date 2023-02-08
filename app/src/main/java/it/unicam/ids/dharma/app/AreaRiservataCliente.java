@@ -17,7 +17,10 @@ public class AreaRiservataCliente implements ICliente{
 
     @Override
     public void apriMenuRicerca() {
+        String[] vociMenu= {"Inserimento", "Modifica", "Visualizzazione", "Cancellazione"};
 
+        for (int i= 0; i<vociMenu.length; i++)
+            System.out.println (vociMenu[i]);
     }
 
     @Override
