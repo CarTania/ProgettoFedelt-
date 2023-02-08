@@ -1,6 +1,7 @@
 package it.unicam.ids.dharma.app;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class AreaRiservataCliente implements ICliente{
 
@@ -22,6 +23,16 @@ public class AreaRiservataCliente implements ICliente{
         for (int i= 0; i<vociMenu.length; i++)
             System.out.println (vociMenu[i]);
     }
+
+    public String effettuaScelta(){
+        String effettuaScelta;
+        System.out.println("Scelta => ");
+        Scanner scanner = new Scanner(System.in);
+        effettuaScelta= scanner.nextLine();
+        return effettuaScelta;
+
+    }
+
 
     @Override
     public void cercaPerAzienda() {
