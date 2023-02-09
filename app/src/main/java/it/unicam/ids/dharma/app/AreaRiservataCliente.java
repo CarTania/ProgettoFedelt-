@@ -60,7 +60,9 @@ public class AreaRiservataCliente implements ICliente{
 
     @Override
     public void cercaPerTipologia(String tipologia) {
-
+        Predicate<String> matchTipologia = n -> (n.equals(tipologia));
+        //il gestore dei programmi ritorna la lista dei programmi attivati di una determinata tipologia.
+        Optional<List<ProgrammaFedelta>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchTipologia);
     }
 
     @Override
