@@ -39,6 +39,7 @@ public class AreaRiservataCliente implements ICliente{
     @Override
     public void cercaPerAzienda(String nomeAzienda) {
 
+
     }
 
     @Override
