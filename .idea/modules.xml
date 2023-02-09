@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/ProgettoFedelta.iml" filepath="$PROJECT_DIR$/.idea/ProgettoFedelta.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ProgettoFedelta.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ProgettoFedelta.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ProgettoFedelta.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ProgettoFedelta.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/ProgettoFedelta.app.test.iml" filepath="$PROJECT_DIR$/.idea/modules/app/ProgettoFedelta.app.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProgettoFedelta.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/ProgettoFedelta.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProgettoFedelta.buildSrc.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ProgettoFedelta.buildSrc.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ProgettoFedelta.buildSrc.test.iml" filepath="$PROJECT_DIR$/.idea/modules/ProgettoFedelta.buildSrc.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/list/ProgettoFedelta.list.iml" filepath="$PROJECT_DIR$/.idea/modules/list/ProgettoFedelta.list.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/list/ProgettoFedelta.list.main.iml" filepath="$PROJECT_DIR$/.idea/modules/list/ProgettoFedelta.list.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/list/ProgettoFedelta.list.test.iml" filepath="$PROJECT_DIR$/.idea/modules/list/ProgettoFedelta.list.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilities/ProgettoFedelta.utilities.iml" filepath="$PROJECT_DIR$/.idea/modules/utilities/ProgettoFedelta.utilities.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilities/ProgettoFedelta.utilities.main.iml" filepath="$PROJECT_DIR$/.idea/modules/utilities/ProgettoFedelta.utilities.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/utilities/ProgettoFedelta.utilities.test.iml" filepath="$PROJECT_DIR$/.idea/modules/utilities/ProgettoFedelta.utilities.test.iml" />
+    </modules>
+  </component>
+</project>

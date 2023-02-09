@@ -7,6 +7,7 @@ import java.util.function.Predicate;
 
 import static it.unicam.ids.dharma.app.GestoreProgrammiFedelta.getGestoreProgrammi;
 
+
 public class AreaRiservataCliente implements ICliente{
 
     private Cliente cliente;
@@ -39,6 +40,16 @@ public class AreaRiservataCliente implements ICliente{
         for (int i= 0; i<vociMenu.length; i++)
             System.out.println (vociMenu[i]);
     }
+
+    public String effettuaScelta(){
+        String effettuaScelta;
+        System.out.println("Scelta => ");
+        Scanner scanner = new Scanner(System.in);
+        effettuaScelta= scanner.nextLine();
+        return effettuaScelta;
+
+    }
+
 
     @Override
     public void cercaPerAzienda(String nomeAzienda) {
