@@ -1,7 +1,11 @@
 package it.unicam.ids.dharma.app;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Predicate;
+
+import static it.unicam.ids.dharma.app.GestoreProgrammiFedelta.getGestoreProgrammi;
 
 public class AreaRiservataCliente implements ICliente{
 
@@ -38,8 +42,10 @@ public class AreaRiservataCliente implements ICliente{
 
     @Override
     public void cercaPerAzienda(String nomeAzienda) {
-
-
+        //predicato che verifica l'uguaglianza con la stringa passata dall'utente.
+        Predicate<String> matchNomeAzienda = n -> (n.equals(nomeAzienda));
+        //il gestore dei programmi ritorna la lista dei programmi attivati da una determinata azienda.
+        Optional<List<ProgrammaFedelta>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchNomeAzienda);
     }
 
     @Override
