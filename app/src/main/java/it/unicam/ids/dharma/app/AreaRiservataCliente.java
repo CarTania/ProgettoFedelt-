@@ -1,6 +1,7 @@
 package it.unicam.ids.dharma.app;
 
 import java.util.List;
+import java.util.Scanner;
 
 public class AreaRiservataCliente implements ICliente{
 
@@ -12,19 +13,31 @@ public class AreaRiservataCliente implements ICliente{
 
     @Override
     public void cercaProgrammaFedelta() {
+        Scanner s = new Scanner(System.in);
 
+        this.apriMenuRicerca();
+        String userChoice = s.nextLine();
+        if(userChoice.equals("1")){
+            System.out.println("Inserisci la tipologia del programma: ");
+            this.cercaPerTipologia(s.nextLine());
+
+        } else if (userChoice.equals("2")) {
+            System.out.println("Inserisci il nome dell'azienda: ");
+            this.cercaPerAzienda(s.nextLine());
+        }else
+            throw new IllegalArgumentException("Inserito nome/tipologia non valido");
     }
 
     @Override
     public void apriMenuRicerca() {
-        String[] vociMenu= {"1. Ricerca per nome", "2. Ricerca per azienda"};
+        String[] vociMenu= {"1. Ricerca per tipologia", "2. Ricerca per azienda"};
 
         for (int i= 0; i<vociMenu.length; i++)
             System.out.println (vociMenu[i]);
     }
 
     @Override
-    public void cercaPerAzienda() {
+    public void cercaPerAzienda(String nomeAzienda) {
 
     }
 
@@ -39,7 +52,7 @@ public class AreaRiservataCliente implements ICliente{
     }
 
     @Override
-    public void cercaPerTipologia() {
+    public void cercaPerTipologia(String tipologia) {
 
     }
 
