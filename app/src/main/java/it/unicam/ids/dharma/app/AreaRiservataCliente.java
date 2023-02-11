@@ -98,6 +98,10 @@ public class AreaRiservataCliente implements ICliente{
 
     @Override
     public void mostraElencoTipologie() {
+        System.out.println("1. Programma a punti");
+        System.out.println("2. Programma a Livelli");
+        System.out.println("3. Member Esclusiva");
+        System.out.println("4. Programma Coalizione");
 
     }
 
@@ -171,13 +175,11 @@ public class AreaRiservataCliente implements ICliente{
 
     }
 
-    @Override
-    public void riepilogoOrdini() {
-
-    }
 
     @Override
     public void cronologiAcquisti() {
-
+        for (Prodotto prodotto : prodottiAcquistati) {
+            System.out.println(prodotto);
+        }
     }
 }

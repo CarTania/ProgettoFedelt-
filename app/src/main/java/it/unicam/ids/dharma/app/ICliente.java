@@ -31,8 +31,6 @@ public interface ICliente {
     public void chiediConfermaDisiscrizioneProgramma();
     public void confermaRichiestaDisiscrizioneProgramma();
     public void acquistaProdotto(Prodotto prodotto);
-    public void riepilogoOrdini();
-
     public void cronologiAcquisti();
 }
 
