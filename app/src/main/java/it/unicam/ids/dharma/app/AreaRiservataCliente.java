@@ -99,7 +99,7 @@ public class AreaRiservataCliente implements ICliente{
     @Override
     public void mostraElencoTipologie() {
 
-    }
+        }
 
     @Override
     public void mostraElencoProgrammiTipologia(String tipologia) {
@@ -178,6 +178,8 @@ public class AreaRiservataCliente implements ICliente{
 
     @Override
     public void cronologiAcquisti() {
-
+        for (Prodotto prodotto : prodottiAcquistati) {
+            System.out.println(prodotto);
+        }
     }
 }
