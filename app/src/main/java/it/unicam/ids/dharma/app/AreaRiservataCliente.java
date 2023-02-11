@@ -171,10 +171,6 @@ public class AreaRiservataCliente implements ICliente{
 
     }
 
-    @Override
-    public void riepilogoOrdini() {
-
-    }
 
     @Override
     public void cronologiAcquisti() {
