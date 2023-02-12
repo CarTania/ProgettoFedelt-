@@ -1,13 +1,20 @@
 package it.unicam.ids.dharma.app;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 public class Main {
 
     public static void main (String [] args)
     {
-        AreaRiservataCliente a= new AreaRiservataCliente();
+        LocalDate t = LocalDate.of(2022, 2, 20);
+        LocalDate n = LocalDate.of(2023, 7, 8);
+        LocalDate s = LocalDate.now();
+        ProgrammaFedelta a= new ProgrammaFedelta(s, n);
 
-        a.apriMenuRicerca();
+        System.out.println (a.attivo());
+        System.out.println (a.calcolaPeriodoValidita().toTotalMonths());
+        System.out.println(a.calcolaTempoRimanente());
 
-        System.out.println ("Inserisci il programma fedeltà: ");
     }
 }
