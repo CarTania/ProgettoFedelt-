@@ -6,9 +6,14 @@ plugins {
     id 'it.unicam.ids.dharma.java-application-conventions'
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation 'org.apache.commons:commons-text'
     implementation project(':utilities')
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.3'
 }
 
 application {
