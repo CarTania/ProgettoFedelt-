@@ -7,12 +7,12 @@ public class DBManager {
         try{
             //esegue la connessione al db "loyaltyplatformdb"
             Connection c = DriverManager.
-                getConnection("jdbc:postgresql://localhost:5432/loyaltyplatformdb",
-                    "postgres", "DharmaProject");
+                getConnection("jdbc:postgresql://trumpet.db.elephantsql.com/zkrfpfxy",
+                    "zkrfpfxy", "d_-OlqLSNapgRgEo7Tax8KsJyctXDUDg");
             //
             Statement stm = c.createStatement();
 
-            ResultSet res = stm.executeQuery("select * from loyaltyplatformschema.clienti;");
+            ResultSet res = stm.executeQuery("select * from clienti;");
 
             while(res.next()){
                 System.out.println("id: "+res.getString("id_cliente")+", "+
