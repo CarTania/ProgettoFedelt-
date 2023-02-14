@@ -1,5 +1,9 @@
 package it.unicam.ids.dharma.app;
 
+/**
+ * Interfaccia ITitolare
+ */
+
 public interface ITitolare {
     boolean attivaProgramma (int idProgramma);
     boolean disattivaProgramma(int idProgramma);
