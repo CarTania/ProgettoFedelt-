@@ -1,50 +1,48 @@
 package it.unicam.ids.dharma.app;
 
-import java.util.List;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Catalogo {
 
-    private int id;
-    private List<Prodotto> premi;
+    private final int id;
+    private final Map<Prodotto, Pair<Integer, Integer>> listapremi;
 
-    public Catalogo(int id, List<Prodotto> premi) {
+    public Catalogo(int id) {
         this.id= id;
-        this.premi = premi;
+        this.listapremi = new HashMap<>();
     }
 
-    public boolean aggiungiAlCatalogo(Prodotto prodotto)
+    public int getId() {
+        return id;
+    }
+
+    public Map<Prodotto, Pair<Integer, Integer>> getListapremi() {
+        return listapremi;
+    }
+
+    public boolean aggiungiAlCatalogo(Prodotto prodotto, int quantita, int punti)
     {
-        if(!(premi.contains(prodotto)))
+        if(!(listapremi.containsKey(prodotto)))
         {
-            return premi.add(prodotto);
+            listapremi.put(prodotto, new MutablePair<>(quantita, punti));
+            return true;
         }
         return false;
     }
 
     public boolean eliminaDalCatalogo(Prodotto prodotto)
     {
-        if (premi.contains(prodotto))
+        if (listapremi.containsKey(prodotto))
         {
-            return premi.remove(prodotto);
+            listapremi.remove(prodotto);
+            return true;
         }
         return false;
-    }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public List<Prodotto> getPremi() {
-        return premi;
-    }
-
-    public void setPremi(List<Prodotto> premi) {
-        this.premi = premi;
     }
 }
 
