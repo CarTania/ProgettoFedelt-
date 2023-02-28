@@ -11,25 +11,21 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.6/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.6/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.6/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/dharma/app/DBManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/dharma/app/DBManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/dharma/app/AreaRiservataTitolare.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/it/unicam/ids/dharma/app/AreaRiservataTitolare.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildSrc/.gradle/7.6/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/.gradle/7.6/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildSrc/.gradle/7.6/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/.gradle/7.6/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildSrc/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildSrc/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/groovy-dsl-plugins/output/adapter-src/ItUnicamIdsDharmaJavaApplicationConventionsPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/groovy-dsl-plugins/output/adapter-src/ItUnicamIdsDharmaJavaApplicationConventionsPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/groovy-dsl-plugins/output/adapter-src/ItUnicamIdsDharmaJavaCommonConventionsPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/groovy-dsl-plugins/output/adapter-src/ItUnicamIdsDharmaJavaCommonConventionsPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/groovy-dsl-plugins/output/adapter-src/ItUnicamIdsDharmaJavaLibraryConventionsPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/groovy-dsl-plugins/output/adapter-src/ItUnicamIdsDharmaJavaLibraryConventionsPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/pluginDescriptors/it.unicam.ids.dharma.java-application-conventions.properties" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/pluginDescriptors/it.unicam.ids.dharma.java-application-conventions.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/pluginDescriptors/it.unicam.ids.dharma.java-common-conventions.properties" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/pluginDescriptors/it.unicam.ids.dharma.java-common-conventions.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/pluginDescriptors/it.unicam.ids.dharma.java-library-conventions.properties" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/pluginDescriptors/it.unicam.ids.dharma.java-library-conventions.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildSrc/build/pluginUnderTestMetadata/plugin-under-test-metadata.properties" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/pluginUnderTestMetadata/plugin-under-test-metadata.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/resources/main/META-INF/gradle-plugins/it.unicam.ids.dharma.java-application-conventions.properties" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/resources/main/META-INF/gradle-plugins/it.unicam.ids.dharma.java-application-conventions.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/resources/main/META-INF/gradle-plugins/it.unicam.ids.dharma.java-common-conventions.properties" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/resources/main/META-INF/gradle-plugins/it.unicam.ids.dharma.java-common-conventions.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/buildSrc/build/resources/main/META-INF/gradle-plugins/it.unicam.ids.dharma.java-library-conventions.properties" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/resources/main/META-INF/gradle-plugins/it.unicam.ids.dharma.java-library-conventions.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/buildSrc/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/buildSrc/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/list/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/list/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/list/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/list/build/tmp/jar/MANIFEST.MF" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/utilities/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities/build/tmp/jar/MANIFEST.MF" beforeDir="false" afterPath="$PROJECT_DIR$/utilities/build/tmp/jar/MANIFEST.MF" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,23 +36,6 @@
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
-  </component>
-  <component name="ExternalProjectsManager">
-    <system id="GRADLE">
-      <state>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="ProgettoFedelta" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
-      </state>
-    </system>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -167,7 +146,9 @@
       <updated>1675444446968</updated>
       <workItem from="1676078693473" duration="1070000" />
       <workItem from="1676141922888" duration="294000" />
-      <workItem from="1676222511965" duration="1128000" />
+      <workItem from="1676222511965" duration="2253000" />
+      <workItem from="1676392235081" duration="783000" />
+      <workItem from="1677259112424" duration="2034000" />
     </task>
     <servers />
   </component>
