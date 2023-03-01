@@ -2,7 +2,7 @@ package it.unicam.ids.dharma.app;
 
 import java.util.List;
 
-public class AreaRiservataTitolare implements ITitolare{
+public class AreaRiservataTitolare extends AreaRiservata<Titolare> implements ITitolare{
 
     private Titolare titolare;
     private List<ProgrammaFedelta> listaProgrammi;
@@ -97,3 +97,4 @@ public class AreaRiservataTitolare implements ITitolare{
         return false;
     }
 }
+
