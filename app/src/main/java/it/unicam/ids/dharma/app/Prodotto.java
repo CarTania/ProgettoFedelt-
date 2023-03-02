@@ -1,15 +1,24 @@
 package it.unicam.ids.dharma.app;
 
-public class Prodotto {
+public class Prodotto implements Cloneable{
 
     private String nome;
-    private int codice;
-    private int costo;
+    private final int idProdotto;
+    private double prezzo;
+    private int quantita;
 
-    public Prodotto(String nome, int codice, int costo) {
+    public Prodotto(String nome, int idProdotto, double prezzo) {
         this.nome = nome;
-        this.codice = codice;
-        this.costo = costo;
+        this.idProdotto = idProdotto;
+        this.prezzo = prezzo;
+        this.quantita = 1;
+    }
+
+    public Prodotto(String nome, int idProdotto, double prezzo, int quantita) {
+        this.nome = nome;
+        this.idProdotto = idProdotto;
+        this.prezzo = prezzo;
+        this.quantita = quantita;
     }
 
     public String getNome() {
@@ -20,19 +29,30 @@ public class Prodotto {
         this.nome = nome;
     }
 
-    public int getCodice() {
-        return codice;
+    public int getIdProdotto() {
+        return idProdotto;
     }
 
-    public void setCodice(int codice) {
-        this.codice = codice;
+    public double getPrezzo() {
+        return prezzo;
     }
 
-    public int getCosto() {
-        return costo;
+    public void setPrezzo(int prezzo) {
+        this.prezzo = prezzo;
     }
 
-    public void setCosto(int costo) {
-        this.costo = costo;
+    public int getQuantita() {
+        return quantita;
+    }
+
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
+    }
+
+    public Prodotto ottieniProdotto() throws CloneNotSupportedException {
+        Prodotto prodotto = (Prodotto) this.clone();
+        prodotto.setQuantita(1);
+        this.quantita--;
+        return prodotto;
     }
 }
