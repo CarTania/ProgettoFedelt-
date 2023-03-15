@@ -2,18 +2,28 @@ package it.unicam.ids.dharma.app;
 
 import java.util.List;
 
-public class Livello {
+public class Livello<T> {
 
     private int numeroLivello;
     private List<Cliente> clientiLivello;
     private int percentualeDiAvanzamento;
-    private int scontoLivello;
+    private T vantaggioLivello;
 
-    public Livello(int numeroLivello, List<Cliente> clientiLivello, int percentualeDiAvanzamento, int scontoLivello) {
+    public Livello(int numeroLivello, List<Cliente> clientiLivello, int percentualeDiAvanzamento, T vantaggioLivello) {
         this.numeroLivello = numeroLivello;
         this.clientiLivello = clientiLivello;
         this.percentualeDiAvanzamento = percentualeDiAvanzamento;
-        this.scontoLivello = scontoLivello;
+        this.vantaggioLivello = vantaggioLivello;
+    }
+
+    public void aggiornaLivello()
+    {
+
+    }
+
+    public void scalaLivello()
+    {
+
     }
 
 
@@ -41,11 +51,11 @@ public class Livello {
         this.percentualeDiAvanzamento = percentualeDiAvanzamento;
     }
 
-    public int getScontoLivello() {
-        return scontoLivello;
+    public T vantaggioLivello(){
+        return vantaggioLivello;
     }
 
-    public void setScontoLivello(int scontoLivello) {
-        this.scontoLivello = scontoLivello;
+    public void setVantaggioLivello(T vantaggioLivello) {
+        this.vantaggioLivello= vantaggioLivello;
     }
 }
