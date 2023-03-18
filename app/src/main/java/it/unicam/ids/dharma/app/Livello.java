@@ -1,61 +1,58 @@
 package it.unicam.ids.dharma.app;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class Livello<T> {
 
-    private int numeroLivello;
-    private List<Cliente> clientiLivello;
-    private int percentualeDiAvanzamento;
-    private T vantaggioLivello;
+    private final int numeroLivello;
+    private final Map<Cliente, Double> clientiLivello;
+    private final T vantaggioLivello;
+    private final double soglia;
 
-    public Livello(int numeroLivello, List<Cliente> clientiLivello, int percentualeDiAvanzamento, T vantaggioLivello) {
+    public Livello(int numeroLivello, T vantaggioLivello, double soglia) {
         this.numeroLivello = numeroLivello;
-        this.clientiLivello = clientiLivello;
-        this.percentualeDiAvanzamento = percentualeDiAvanzamento;
+        this.clientiLivello= new HashMap<>();
         this.vantaggioLivello = vantaggioLivello;
+        this.soglia = soglia;
     }
 
-    public void aggiornaLivello()
+    public boolean aggiungiCliente(Cliente cliente, double percentualeAvanzamento)
     {
-
+        if(!clientiLivello.containsKey(cliente))
+        {
+       clientiLivello.put(cliente,percentualeAvanzamento);
+       return true;
+        }
+     return false;
     }
 
-    public void scalaLivello()
+    public boolean aumentaPercentuale(Cliente clienteAttuale, Acquisto acquisto)
     {
-
+        if (acquisto.getCliente().equals(clienteAttuale))
+        {
+            clientiLivello.replace(clienteAttuale, clientiLivello.get(clienteAttuale), (acquisto.totaleAcquisto()*0.1));
+            return true;
+        }
+        return false;
     }
-
 
     public int getNumeroLivello() {
         return numeroLivello;
     }
 
-    public void setNumeroLivello(int numeroLivello) {
-        this.numeroLivello = numeroLivello;
-    }
-
-    public List<Cliente> getCliente() {
+    public Map<Cliente, Double> getCliente() {
         return clientiLivello;
     }
 
-    public void setCliente(List<Cliente> cliente) {
-        this.clientiLivello = cliente;
-    }
-
-    public int getPercentualeDiAvanzamento() {
-        return percentualeDiAvanzamento;
-    }
-
-    public void setPercentualeDiAvanzamento(int percentualeDiAvanzamento) {
-        this.percentualeDiAvanzamento = percentualeDiAvanzamento;
-    }
 
     public T vantaggioLivello(){
         return vantaggioLivello;
     }
 
-    public void setVantaggioLivello(T vantaggioLivello) {
-        this.vantaggioLivello= vantaggioLivello;
+    public double getSoglia() {
+        return soglia;
     }
 }
