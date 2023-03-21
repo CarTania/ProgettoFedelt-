@@ -1,6 +1,7 @@
 package it.unicam.ids.dharma.app;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Acquisto {
@@ -14,7 +15,7 @@ public class Acquisto {
     public Acquisto(LocalDate dataAcquisto, Cliente cliente) {
         this.dataAcquisto = dataAcquisto;
         this.cliente = cliente;
-        this.listaProdotti= null;
+        this.listaProdotti= new ArrayList<>();
     }
 
     public boolean aggiungiProdotto(Prodotto prodotto)
@@ -35,7 +36,7 @@ public class Acquisto {
 
         for (Prodotto p: listaProdotti)
         {
-            sum+= p.getCosto();
+            sum+= p.getPrezzo();
         }
         return sum;
     }

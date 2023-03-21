@@ -33,8 +33,12 @@ public class Livello<T> {
     {
         if (acquisto.getCliente().equals(clienteAttuale))
         {
-            clientiLivello.replace(clienteAttuale, clientiLivello.get(clienteAttuale), (acquisto.totaleAcquisto()*0.1));
-            return true;
+            if (clientiLivello.containsKey(clienteAttuale))
+            {
+                clientiLivello.replace(clienteAttuale, clientiLivello.get(clienteAttuale),
+                        (acquisto.totaleAcquisto() * 0.1)+ (clientiLivello.get(clienteAttuale)));
+                return true;
+            }
         }
         return false;
     }
