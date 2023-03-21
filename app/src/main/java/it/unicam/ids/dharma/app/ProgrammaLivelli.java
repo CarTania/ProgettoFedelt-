@@ -6,14 +6,32 @@ import java.util.List;
 
 public class ProgrammaLivelli<T> extends ProgrammaFedelta {
 
-    private Livello<T> livelloCorrente;
+
+
     private Livello<T>[] livelliProgramma;
 
 
-    public ProgrammaLivelli(int numlivelli, double soglia, T vantaggio, LocalDate dataAttivazione, LocalDate dataScadenza) {
+    public ProgrammaLivelli(int numlivelli, List<Livello<T>> listaLivelli, LocalDate dataAttivazione, LocalDate dataScadenza) {
         super(dataAttivazione, dataScadenza);
-        this.livelloCorrente = new Livello(0, vantaggio, soglia);
         this.livelliProgramma = new Livello[numlivelli];
+        inizializzaProgramma(listaLivelli);
+    }
+
+
+    /**
+     * Questo metodo permette di inizializzare il programma aggiungendo i livelli, altrimenti lancio l'eccezione.
+     * @param listaLivelli
+     */
+    private void inizializzaProgramma(List<Livello<T>> listaLivelli)
+    {
+        if(listaLivelli.size()== livelliProgramma.length)
+        {
+            for(int i= 0; i< listaLivelli.size(); i++)
+            {
+                livelliProgramma[i]= listaLivelli.get(i);
+            }
+        } else throw new IllegalArgumentException();
+
     }
 
     /**
@@ -52,5 +70,9 @@ public class ProgrammaLivelli<T> extends ProgrammaFedelta {
                     .filter(e -> e.getValue() >= livelliProgramma[indiceLivello].getSoglia())
                     .forEach(e -> livelliProgramma[indiceLivello].getCliente().entrySet().remove(e));
         }
+    }
+
+    public Livello<T>[] getLivelliProgramma() {
+        return livelliProgramma;
     }
 }

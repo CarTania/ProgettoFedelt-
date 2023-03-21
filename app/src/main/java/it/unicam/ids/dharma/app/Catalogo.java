@@ -44,7 +44,7 @@ public class Catalogo {
     //assegna un numero di punti diverso a uno specifico premio.
     public boolean aggiornaPuntiPremio(Prodotto prodotto, int punti){
         if(listapremi.containsKey(prodotto)){
-            listapremi.get(prodotto).setPunti(punti);
+            listapremi.get(prodotto).setPuntiPremio(punti);
             return true;
         }
         return false;
@@ -53,7 +53,7 @@ public class Catalogo {
     public boolean aggiornaQuantitaPremio(Prodotto prodotto, int quantita){
         if(listapremi.containsKey(prodotto)){
             if(prodotto.getQuantita() >= quantita){
-                listapremi.get(prodotto).setQuantita(quantita);
+                listapremi.get(prodotto).setQuantitaPremio(quantita);
                 return true;
             }
         }
@@ -68,9 +68,9 @@ public class Catalogo {
     public Optional<Prodotto> emettiPremio(Prodotto prodotto) throws CloneNotSupportedException {
         if(listapremi.containsKey(prodotto)){
             //se il premio è disponibile nel catalogo
-            if(listapremi.get(prodotto).getQuantita() != 0){
+            if(listapremi.get(prodotto).getQuantitaPremio() != 0){
                 aggiornaQuantitaPremio(prodotto,
-                    listapremi.get(prodotto).getQuantita() - 1);
+                    listapremi.get(prodotto).getQuantitaPremio() - 1);
                 return Optional.ofNullable(prodotto.ottieniProdotto());
             }
         }
@@ -90,19 +90,19 @@ public class Catalogo {
             this.punti = punti;
         }
 
-        public int getQuantita() {
+        public int getQuantitaPremio() {
             return quantita;
         }
 
-        public void setQuantita(int quantita) {
+        public void setQuantitaPremio(int quantita) {
             this.quantita = quantita;
         }
 
-        public int getPunti() {
+        public int getPuntiPremio() {
             return punti;
         }
 
-        public void setPunti(int punti) {
+        public void setPuntiPremio(int punti) {
             this.punti = punti;
         }
     }
