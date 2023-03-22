@@ -1,12 +1,12 @@
 package it.unicam.ids.dharma.app;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 public class ProgrammaLivelli<T> extends ProgrammaFedelta {
-
-
 
     private Livello<T>[] livelliProgramma;
 
@@ -17,7 +17,6 @@ public class ProgrammaLivelli<T> extends ProgrammaFedelta {
         inizializzaProgramma(listaLivelli);
     }
 
-
     /**
      * Questo metodo permette di inizializzare il programma aggiungendo i livelli, altrimenti lancio l'eccezione.
      * @param listaLivelli
@@ -26,6 +25,12 @@ public class ProgrammaLivelli<T> extends ProgrammaFedelta {
     {
         if(listaLivelli.size()== livelliProgramma.length)
         {
+            Collections.sort(listaLivelli);
+            for (int j= 0; j< listaLivelli.size(); j++)
+            {
+                if(listaLivelli.get(j).getNumeroLivello() != j+1)
+                    throw new IllegalArgumentException();
+            }
             for(int i= 0; i< listaLivelli.size(); i++)
             {
                 livelliProgramma[i]= listaLivelli.get(i);

@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Livello<T> {
+public class Livello<T> implements Comparable<Livello<T>>{
 
     private final int numeroLivello;
     private final Map<Cliente, Double> clientiLivello;
@@ -58,5 +58,20 @@ public class Livello<T> {
 
     public double getSoglia() {
         return soglia;
+    }
+
+
+    @Override
+    public int compareTo(Livello<T> o) {
+
+        if(this.getNumeroLivello() < o.getNumeroLivello())
+        {
+            return -1;
+        } else if(this.getNumeroLivello() > o.getNumeroLivello())
+        {
+            return 1;
+        }
+
+        return 0;
     }
 }
