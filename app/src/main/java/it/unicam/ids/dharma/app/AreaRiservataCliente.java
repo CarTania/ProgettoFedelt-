@@ -15,7 +15,7 @@ public class AreaRiservataCliente implements ICliente{
 
     private Cliente cliente;
 
-    private List<ProgrammaFedelta> programmiAttivo;
+    private List<ProgrammaFedelta> programmiAttivati;
 
     private List <Prodotto> prodottiAcquistati;
     @Override
@@ -69,11 +69,6 @@ public class AreaRiservataCliente implements ICliente{
     }
 
     @Override
-    public void selezionaAzienda(String nomeAzienda) {
-
-    }
-
-    @Override
     public void selezionaProgramma(int idProgramma) {
 
     }
@@ -90,10 +85,6 @@ public class AreaRiservataCliente implements ICliente{
 
     }
 
-    @Override
-    public void mostraElencoAziende() {
-
-    }
 
     @Override
     public void mostraElencoProgrammiAzienda(String nomeAzienda) {
@@ -115,69 +106,11 @@ public class AreaRiservataCliente implements ICliente{
     }
 
     @Override
-    public void mostraElencoProgrammiTipologia(String tipologia) {
+    public void mostraElencoProgrammiPerTipologia(String tipologia) {
 
     }
 
-    @Override
-    public void iniziaRegistrazione() {
 
-    }
-
-    @Override
-    public void accettaContratto() {
-
-    }
-
-    @Override
-    public void inserisciDati(String nome, String cognome, String username, String password) {
-
-    }
-
-    @Override
-    public void richiediDatiCliente() {
-
-    }
-
-    @Override
-    public void inviaDatiCliente(String nome, String cognome, String username, String password) {
-
-    }
-
-    @Override
-    public boolean confermaRegistrazione() {
-        return false;
-    }
-
-    @Override
-    public boolean annullaRegistrazione() {
-        return false;
-    }
-
-    @Override
-    public void iniziaDisiscrizione() {
-
-    }
-
-    @Override
-    public boolean confermaVolontaDisiscrizionePiattaforma() {
-        return false;
-    }
-
-    @Override
-    public void visualizzaMessaggioAllerta() {
-
-    }
-
-    @Override
-    public void chiediConfermaDisiscrizioneProgramma() {
-
-    }
-
-    @Override
-    public void confermaRichiestaDisiscrizioneProgramma() {
-
-    }
 
     @Override
     public void acquistaProdotto(Prodotto prodotto) {

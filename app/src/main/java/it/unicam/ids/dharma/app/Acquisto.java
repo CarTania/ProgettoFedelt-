@@ -12,7 +12,7 @@ public class Acquisto {
 
     private final LocalDate dataAcquisto;
 
-    private List<Prodotto> listaProdotti;
+    private final List<Prodotto> listaProdotti;
 
     private final Cliente cliente;
 
