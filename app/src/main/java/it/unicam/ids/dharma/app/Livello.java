@@ -5,6 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * La classe rappresenta un livello del programma a livelli.
+ * @param <T> la tipologia del vantaggio associato al livello.
+ */
 public class Livello<T> implements Comparable<Livello<T>>{
 
     private final int numeroLivello;
@@ -29,14 +33,21 @@ public class Livello<T> implements Comparable<Livello<T>>{
      return false;
     }
 
-    public boolean aumentaPercentuale(Cliente clienteAttuale, Acquisto acquisto)
+    /**
+     * Aumenta la percentuale di avanzamento di un cliente nel livello, dopo che ha effettuato
+     * un nuovo acquisto.
+     * @param cliente il cliente nel livello.
+     * @param acquisto l'acquisto effettuato dal cliente.
+     * @return true se la percentuale è stata aumentata correttamente, false altrimenti.
+     */
+    public boolean aumentaPercentuale(Cliente cliente, Acquisto acquisto)
     {
-        if (acquisto.getCliente().equals(clienteAttuale))
+        if (acquisto.getCliente().equals(cliente))
         {
-            if (clientiLivello.containsKey(clienteAttuale))
+            if (clientiLivello.containsKey(cliente))
             {
-                clientiLivello.replace(clienteAttuale, clientiLivello.get(clienteAttuale),
-                        (acquisto.totaleAcquisto() * 0.1)+ (clientiLivello.get(clienteAttuale)));
+                clientiLivello.replace(cliente, clientiLivello.get(cliente),
+                        (acquisto.totaleAcquisto() * 0.1)+ (clientiLivello.get(cliente)));
                 return true;
             }
         }

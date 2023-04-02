@@ -7,7 +7,10 @@ import java.util.function.Predicate;
 
 import static it.unicam.ids.dharma.app.GestoreProgrammiFedelta.getGestoreProgrammi;
 
-
+/**
+ * La classe rappresenta l'area riservata di un cliente: tramite questa il cliente effettua le
+ * operazioni di suo interesse.
+ */
 public class AreaRiservataCliente implements ICliente{
 
     private Cliente cliente;
@@ -15,7 +18,6 @@ public class AreaRiservataCliente implements ICliente{
     private List<ProgrammaFedelta> programmiAttivo;
 
     private List <Prodotto> prodottiAcquistati;
-
     @Override
     public void cercaProgrammaFedelta() {
         Scanner s = new Scanner(System.in);
@@ -33,6 +35,9 @@ public class AreaRiservataCliente implements ICliente{
             throw new IllegalArgumentException("Inserito nome/tipologia non valido");
     }
 
+    /**
+     * Il metodo permette di aprire il menù di ricerca di un programma fedeltà.
+     */
     @Override
     public void apriMenuRicerca() {
         String[] vociMenu= {"1. Ricerca per tipologia", "2. Ricerca per azienda"};
@@ -41,6 +46,10 @@ public class AreaRiservataCliente implements ICliente{
             System.out.println (vociMenu[i]);
     }
 
+    /**
+     * Il metodo legge la scelta in input del cliente e la ritorna.
+     * @return la scelta effettuata dal cliente.
+     */
     public String effettuaScelta(){
         String effettuaScelta;
         System.out.println("Scelta => ");

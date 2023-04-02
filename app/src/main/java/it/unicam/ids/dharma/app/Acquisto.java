@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * La classe rappresenta un acquisto effettuato da un cliente. E' composto da una lista di prodotti
+ * acquistati in una data specifica.
+ */
 public class Acquisto {
 
     private final LocalDate dataAcquisto;
@@ -53,5 +57,4 @@ public class Acquisto {
     public Cliente getCliente() {
         return cliente;
     }
-
 }

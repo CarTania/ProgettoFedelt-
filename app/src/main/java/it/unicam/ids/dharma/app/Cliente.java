@@ -1,5 +1,8 @@
 package it.unicam.ids.dharma.app;
 
+/**
+ * Rappresenta un cliente iscritto alla piattaforma.
+ */
 public class Cliente {
 
     private int id;
