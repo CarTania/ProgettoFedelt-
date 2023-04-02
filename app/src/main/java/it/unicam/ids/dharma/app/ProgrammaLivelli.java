@@ -6,6 +6,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Rappresenta un programma a livelli: ciascun livello ha associato un particolare vantaggio che
+ * il cliente iscritto a questo programma, una volta raggiunto, può riscattare.
+ * @param <T> il vantaggio associato a un livello.
+ */
 public class ProgrammaLivelli<T> extends ProgrammaFedelta {
 
     private Livello<T>[] livelliProgramma;
@@ -18,8 +23,9 @@ public class ProgrammaLivelli<T> extends ProgrammaFedelta {
     }
 
     /**
-     * Questo metodo permette di inizializzare il programma aggiungendo i livelli, altrimenti lancio l'eccezione.
-     * @param listaLivelli
+     * Questo metodo permette di inizializzare il programma aggiungendo i livelli,
+     * altrimenti lancia l'eccezione.
+     * @param listaLivelli la lista di livelli usata per l'inizializzazione.
      */
     private void inizializzaProgramma(List<Livello<T>> listaLivelli)
     {
@@ -40,11 +46,11 @@ public class ProgrammaLivelli<T> extends ProgrammaFedelta {
     }
 
     /**
-     * Calcolo numero totale dei clienti all'interno di questo programma.
+     * Calcola il numero totale dei clienti all'interno di questo programma.
      */
     public int totaleClienti() {
         int somma = 0;
-        for (Livello l : livelliProgramma) {
+        for (Livello<T> l : livelliProgramma) {
             somma += l.getCliente().size();
         }
         return somma;

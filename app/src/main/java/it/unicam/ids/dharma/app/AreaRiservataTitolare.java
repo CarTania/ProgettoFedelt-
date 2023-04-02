@@ -21,12 +21,12 @@ public class AreaRiservataTitolare extends AreaRiservata<Titolare> implements IT
     }
 
     @Override
-    public boolean attivaProgramma(int idProgramma) {
+    public boolean creaProgramma(int idProgramma) {
         return false;
     }
 
     @Override
-    public boolean disattivaProgramma(int idProgramma) {
+    public boolean rimuoviProgramma(int idProgramma) {
         return false;
     }
 

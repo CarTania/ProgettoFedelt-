@@ -1,5 +1,8 @@
 package it.unicam.ids.dharma.app;
 
+/**
+ * Rappresenta un prodotto venduto da un'azienda.
+ */
 public class Prodotto implements Cloneable{
 
     private String nome;
@@ -49,6 +52,11 @@ public class Prodotto implements Cloneable{
         this.quantita = quantita;
     }
 
+    /**
+     * Ritorna un prodotto singolo.
+     * @return il prodotto singolo.
+     * @throws CloneNotSupportedException
+     */
     public Prodotto ottieniProdotto() throws CloneNotSupportedException {
         Prodotto prodotto = (Prodotto) this.clone();
         prodotto.setQuantita(1);

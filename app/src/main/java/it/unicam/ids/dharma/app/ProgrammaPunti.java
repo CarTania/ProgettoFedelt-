@@ -7,6 +7,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Rappresenta un programma a punti: a questa tipologia di programma può essere associato un catalogo
+ * opzionale. Se questo non è presente, i punti possono essere utilizzati per ottenere uno sconto da
+ * utilizzare presso l'azienda presso cui è attivo il programma.
+ */
 public class ProgrammaPunti extends ProgrammaFedelta{
 
     public ProgrammaPunti(LocalDate dataAttivazione, LocalDate dataScadenza) {
@@ -33,6 +38,10 @@ public class ProgrammaPunti extends ProgrammaFedelta{
         this.punti-= punti;
     }
 
+    /**
+     * Aggiorna i punti dopo un acquisto effettuato dal cliente.
+     * @param acquisto l'acquisto effettuato dal cliente.
+     */
     public void aggiornaPunti(Acquisto acquisto)
     {
         double spesa= acquisto.totaleAcquisto();
