@@ -42,6 +42,7 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * Aggiorna i punti dopo un acquisto effettuato dal cliente.
      * @param acquisto l'acquisto effettuato dal cliente.
      */
+    //da modificare (decrementa punti) e togli parametri
     public void aggiornaPunti(Acquisto acquisto)
     {
         double spesa= acquisto.totaleAcquisto();
@@ -98,6 +99,10 @@ public class ProgrammaPunti extends ProgrammaFedelta{
             return premio;
         }
         return Optional.empty();
+    }
+
+    public Coupon generaCoupon(int punti){
+        return null;
     }
 
 }

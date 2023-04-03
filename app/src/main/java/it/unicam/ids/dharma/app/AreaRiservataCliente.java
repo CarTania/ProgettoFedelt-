@@ -124,4 +124,24 @@ public class AreaRiservataCliente implements ICliente{
             System.out.println(prodotto);
         }
     }
+
+    @Override
+    public void visualizzaCatalogoPremi(int idProgramma) {
+
+    }
+
+    @Override
+    public void riscattaVantaggio(ProgrammaPunti p, int punti) {
+
+    }
+
+    @Override
+    public void riscattaPremio(Prodotto p) {
+
+    }
+
+    public void ottieniCouponSconto(int punti){
+
+    }
+
 }
