@@ -18,5 +18,10 @@ public interface ICliente {
     public void mostraElencoProgrammiPerTipologia(String tipologia);
     public void acquistaProdotto(Prodotto prodotto);
     public void cronologiAcquisti();
+    public void visualizzaCatalogoPremi(int idProgramma);
+    public void riscattaVantaggio(ProgrammaPunti p, int punti);
+    public void riscattaPremio (Prodotto p);
+    public void ottieniCouponSconto(int punti);
+
 }
 
