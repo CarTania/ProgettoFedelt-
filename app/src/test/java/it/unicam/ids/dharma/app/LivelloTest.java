@@ -30,6 +30,6 @@ public class LivelloTest {
         Prodotto prodotto= new Prodotto("astuccio", 60, 5);
         acquisto.aggiungiProdotto(prodotto);
         livelloStandard.aumentaPercentuale(cliente1, acquisto);
-        assertEquals(livelloStandard.getCliente().get(cliente1), 40+ acquisto.totaleAcquisto()*0.1);
+        assertEquals(livelloStandard.getClientiLivello().get(cliente1), 40+ acquisto.totaleAcquisto()*0.1);
     }
 }

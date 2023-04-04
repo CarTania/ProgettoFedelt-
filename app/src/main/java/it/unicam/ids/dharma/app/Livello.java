@@ -1,8 +1,6 @@
 package it.unicam.ids.dharma.app;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,7 +16,7 @@ public class Livello<T> implements Comparable<Livello<T>>{
 
     public Livello(int numeroLivello, T vantaggioLivello, double soglia) {
         this.numeroLivello = numeroLivello;
-        this.clientiLivello= new HashMap<>();
+        this.clientiLivello = new HashMap<>();
         this.vantaggioLivello = vantaggioLivello;
         this.soglia = soglia;
     }
@@ -27,10 +25,10 @@ public class Livello<T> implements Comparable<Livello<T>>{
     {
         if(!clientiLivello.containsKey(cliente))
         {
-       clientiLivello.put(cliente,percentualeAvanzamento);
-       return true;
+            clientiLivello.put(cliente, percentualeAvanzamento);
+            return true;
         }
-     return false;
+        return false;
     }
 
     /**
@@ -58,12 +56,12 @@ public class Livello<T> implements Comparable<Livello<T>>{
         return numeroLivello;
     }
 
-    public Map<Cliente, Double> getCliente() {
+    public Map<Cliente, Double> getClientiLivello() {
         return clientiLivello;
     }
 
 
-    public T vantaggioLivello(){
+    public T getVantaggioLivello(){
         return vantaggioLivello;
     }
 
@@ -74,15 +72,11 @@ public class Livello<T> implements Comparable<Livello<T>>{
 
     @Override
     public int compareTo(Livello<T> o) {
-
-        if(this.getNumeroLivello() < o.getNumeroLivello())
-        {
+        if(this.getNumeroLivello() < o.getNumeroLivello()) {
             return -1;
-        } else if(this.getNumeroLivello() > o.getNumeroLivello())
-        {
+        } else if(this.getNumeroLivello() > o.getNumeroLivello()) {
             return 1;
         }
-
         return 0;
     }
 }

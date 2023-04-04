@@ -37,7 +37,7 @@ public class ProgrammaLivelliTest {
         ProgrammaLivelli<Integer> programmaLivelli2= new ProgrammaLivelli<>(3, listaLivello2, LocalDate.now(),
                         LocalDate.of(2023, 3, 22));
 
-        a
+
 
 
     }
