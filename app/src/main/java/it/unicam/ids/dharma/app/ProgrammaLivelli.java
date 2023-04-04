@@ -2,9 +2,8 @@ package it.unicam.ids.dharma.app;
 
 import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Rappresenta un programma a livelli: ciascun livello ha associato un particolare vantaggio che
@@ -12,37 +11,21 @@ import java.util.List;
  * @param <T> il vantaggio associato a un livello.
  */
 public class ProgrammaLivelli<T> extends ProgrammaFedelta {
-
-    private Livello<T>[] livelliProgramma;
-
-
-    public ProgrammaLivelli(int numlivelli, List<Livello<T>> listaLivelli, LocalDate dataAttivazione, LocalDate dataScadenza) {
+    private final Livello<T>[] livelliProgramma;
+    public ProgrammaLivelli(int numlivelli, List<T> vantaggi, LocalDate dataAttivazione, LocalDate dataScadenza) {
         super(dataAttivazione, dataScadenza);
         this.livelliProgramma = new Livello[numlivelli];
-        inizializzaProgramma(listaLivelli);
+        inizializzaProgramma(vantaggi);
     }
 
     /**
-     * Questo metodo permette di inizializzare il programma aggiungendo i livelli,
-     * altrimenti lancia l'eccezione.
-     * @param listaLivelli la lista di livelli usata per l'inizializzazione.
+     * Questo metodo permette di inizializzare il programma aggiungendo i livelli con i vantaggi associati.
      */
-    private void inizializzaProgramma(List<Livello<T>> listaLivelli)
+    private void inizializzaProgramma(List<T> vantaggiLivelli)
     {
-        if(listaLivelli.size()== livelliProgramma.length)
-        {
-            Collections.sort(listaLivelli);
-            for (int j= 0; j< listaLivelli.size(); j++)
-            {
-                if(listaLivelli.get(j).getNumeroLivello() != j+1)
-                    throw new IllegalArgumentException();
-            }
-            for(int i= 0; i< listaLivelli.size(); i++)
-            {
-                livelliProgramma[i]= listaLivelli.get(i);
-            }
-        } else throw new IllegalArgumentException();
-
+        for (int i = 0; i < livelliProgramma.length; i++) {
+            livelliProgramma[i] = new Livello<>(i, vantaggiLivelli.get(i), 100);
+        }
     }
 
     /**
@@ -51,7 +34,7 @@ public class ProgrammaLivelli<T> extends ProgrammaFedelta {
     public int totaleClienti() {
         int somma = 0;
         for (Livello<T> l : livelliProgramma) {
-            somma += l.getCliente().size();
+            somma += l.getClientiLivello().size();
         }
         return somma;
     }
@@ -59,28 +42,28 @@ public class ProgrammaLivelli<T> extends ProgrammaFedelta {
     /**
      * aggiorna la percentuale.
      */
-    public void aggiornaLivello(Livello<T> livelloDaAggiornare, List<Acquisto> acquistiEffettuati) {
-        for (Acquisto a : acquistiEffettuati) {
-            if (livelloDaAggiornare.getCliente().containsKey(a.getCliente())) {
-                livelloDaAggiornare.aumentaPercentuale(a.getCliente(), a);
+    public void aggiornaLivello(Livello<T> livelloDaAggiornare, Acquisto acquisto) {
+        Cliente cliente = acquisto.getCliente();
+        if(livelloDaAggiornare.getClientiLivello().containsKey(cliente)){
+            livelloDaAggiornare.aumentaPercentuale(cliente, acquisto);
+            if(livelloDaAggiornare.getClientiLivello().get(cliente) >= livelloDaAggiornare.getSoglia()){
+                this.scalaLivello(livelloDaAggiornare, cliente);
             }
-        }
+        }else throw new IllegalArgumentException("Il cliente che ha effettuato l'acquisto non è" +
+            "presente nel livello da aggiornare");
     }
 
     /**
      * Passare al livello successivo.
      */
 
-    public void scalaLivello() {
-        for (int i = 0; i < livelliProgramma.length - 1; i++) {
-            int indiceLivello = i;
-            livelliProgramma[i].getCliente().entrySet().stream()
-                    .filter(e -> e.getValue() >= livelliProgramma[indiceLivello].getSoglia())
-                    .forEach(e -> livelliProgramma[indiceLivello + 1].getCliente().entrySet().add(e));
-            livelliProgramma[i].getCliente().entrySet().stream()
-                    .filter(e -> e.getValue() >= livelliProgramma[indiceLivello].getSoglia())
-                    .forEach(e -> livelliProgramma[indiceLivello].getCliente().entrySet().remove(e));
-        }
+    public void scalaLivello(Livello<T> livelloDiRiferimento, Cliente cliente) {
+        int numLivelloRiferimento = livelloDiRiferimento.getNumeroLivello();
+        if(numLivelloRiferimento < this.livelliProgramma.length - 1){
+            livelliProgramma[numLivelloRiferimento + 1].getClientiLivello().put(cliente, 0.0);
+            livelliProgramma[numLivelloRiferimento].getClientiLivello().remove(cliente);
+        }else throw new IllegalArgumentException("Impossibile scalare al livello successivo poichè" +
+            "il livello di riferimento è l'ultimo livello del programma.");
     }
 
     public Livello<T>[] getLivelliProgramma() {

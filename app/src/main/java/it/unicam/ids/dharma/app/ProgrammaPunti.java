@@ -1,11 +1,9 @@
 package it.unicam.ids.dharma.app;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Rappresenta un programma a punti: a questa tipologia di programma può essere associato un catalogo
@@ -13,58 +11,30 @@ import java.util.stream.Stream;
  * utilizzare presso l'azienda presso cui è attivo il programma.
  */
 public class ProgrammaPunti extends ProgrammaFedelta{
-
-    public ProgrammaPunti(LocalDate dataAttivazione, LocalDate dataScadenza) {
-        super(dataAttivazione, dataScadenza);
-    }
-
-    private int punti;
-
-    private Optional<Catalogo> catalogoOpzionale;
-
-    public ProgrammaPunti(LocalDate dataAttivazione, LocalDate dataScadenza, int punti, Optional<Catalogo> catalogoOpzionale) {
-        super(dataAttivazione, dataScadenza);
-        this.punti = punti;
+    private int puntiCliente;
+    private final double costanteCambio;
+    private final Optional<Catalogo> catalogoOpzionale;
+    public ProgrammaPunti(LocalDate dataScadenza, double costanteCambio, Optional<Catalogo> catalogoOpzionale) {
+        super(LocalDate.now(), dataScadenza);
+        this.costanteCambio = costanteCambio;
+        this.puntiCliente = 0;
         this.catalogoOpzionale = catalogoOpzionale;
     }
 
-    private void aggiungiPunti(int punti)
+    private void incrementaPunti(int punti)
     {
-        this.punti+= punti;
+        this.puntiCliente += punti;
     }
 
-    private void rimuoviPunti(int punti)
+    private void decrementaPunti(int punti)
     {
-        this.punti-= punti;
+        this.puntiCliente -= punti;
     }
 
-    /**
-     * Aggiorna i punti dopo un acquisto effettuato dal cliente.
-     * @param acquisto l'acquisto effettuato dal cliente.
-     */
-    //da modificare (decrementa punti) e togli parametri
-    public void aggiornaPunti(Acquisto acquisto)
+
+    public void ottieniPunti(Acquisto acquisto)
     {
-        double spesa= acquisto.totaleAcquisto();
-
-        if(spesa <= 10)
-        {
-            this.aggiungiPunti((int) spesa);
-        }
-        if (spesa > 10 && spesa <= 20)
-        {
-            this.aggiungiPunti((int)spesa*2);
-        }
-
-        if (spesa > 20 && spesa <= 50)
-        {
-            this.aggiungiPunti((int)spesa*3);
-        }
-        if (spesa > 50 && spesa <= 100)
-        {
-            this.aggiungiPunti((int)spesa*4);
-        }
-
+        this.puntiCliente += acquisto.totaleAcquisto()/costanteCambio;
     }
 
 
@@ -89,20 +59,28 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param punti punti che si vogliono utilizzare per riscattare un premio.
      * @return il premio ottenuto.
      */
-
     public Optional<Prodotto> riscattoPremioCatalogo (int punti, Prodotto prodotto) throws CloneNotSupportedException {
 
         if (premiRiscattabili(punti).contains(prodotto))
         {
-            Optional <Prodotto> premio= this.catalogoOpzionale.get().emettiPremio(prodotto);
-            punti-=catalogoOpzionale.get().getListapremi().get(prodotto).getPuntiPremio();
+            Optional <Prodotto> premio = this.catalogoOpzionale.get().emettiPremio(prodotto);
+            int puntiDaScalare = catalogoOpzionale.get().getListapremi().get(prodotto).getPuntiPremio();
+            this.decrementaPunti(puntiDaScalare);
             return premio;
         }
         return Optional.empty();
     }
 
-    public Coupon generaCoupon(int punti){
-        return null;
+    /**
+     * Genera un coupon sconto con i punti che si intendono utilizzare. Lo sconto viene calcolato usando
+     * una percentuale di cambio decisa dal titolare.
+     * @param punti i punti che si intendono utilizzare
+     * @param dataScadenza la scadenza del coupon generato.
+     * @return il coupon generato.
+     */
+    public Coupon generaCoupon(int punti, LocalDate dataScadenza){
+        Coupon c = new Coupon(dataScadenza, punti*costanteCambio);
+        this.decrementaPunti(punti);
+        return c;
     }
-
 }
