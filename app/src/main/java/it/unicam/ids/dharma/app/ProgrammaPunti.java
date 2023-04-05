@@ -20,8 +20,8 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param costanteCambio la costante di cambio, decisa dal titolare, per convertire i punti in euro (e viceversa).
      * @param catalogo       il catalogo da associare al programma a punti.
      */
-    public ProgrammaPunti(LocalDate dataScadenza, double costanteCambio, Catalogo catalogo) {
-        super(LocalDate.now(), dataScadenza);
+    public ProgrammaPunti(int id, LocalDate dataScadenza, double costanteCambio, Catalogo catalogo) {
+        super(id, LocalDate.now(), dataScadenza);
         if (costanteCambio <= 0)
             throw new IllegalArgumentException("La costante di cambio deve essere positiva.");
         this.clientiIscritti = new HashMap<>();
@@ -35,8 +35,8 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param dataScadenza   la data di scadenza del programma.
      * @param costanteCambio la costante di cambio, decisa dal titolare, per convertire i punti in euro (e viceversa).
      */
-    public ProgrammaPunti(LocalDate dataScadenza, double costanteCambio) {
-        super(LocalDate.now(), dataScadenza);
+    public ProgrammaPunti(int id, LocalDate dataScadenza, double costanteCambio) {
+        super(id, LocalDate.now(), dataScadenza);
         if (costanteCambio <= 0)
             throw new IllegalArgumentException("La costante di cambio deve essere positiva.");
         this.clientiIscritti = new HashMap<>();

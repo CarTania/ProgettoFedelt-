@@ -8,12 +8,15 @@ import java.time.Period;
  */
 public class ProgrammaFedelta {
 
-    private LocalDate dataAttivazione;
-    private LocalDate dataScadenza;
+    private final int id;
 
-    private final boolean attivo;
+    private final LocalDate dataAttivazione;
+    private final LocalDate dataScadenza;
 
-    public ProgrammaFedelta(LocalDate dataAttivazione, LocalDate dataScadenza) {
+    private boolean attivo;
+
+    public ProgrammaFedelta(int id, LocalDate dataAttivazione, LocalDate dataScadenza) {
+        this.id = id;
         this.dataAttivazione = dataAttivazione;
         this.dataScadenza = dataScadenza;
         this.attivo= false;
@@ -48,15 +51,8 @@ public class ProgrammaFedelta {
         return dataAttivazione;
     }
 
-    public void setDataAttivazione(LocalDate dataAttivazione) {
-        this.dataAttivazione = dataAttivazione;
-    }
-
     public LocalDate getDataScadenza() {
         return dataScadenza;
     }
 
-    public void setDataScadenza(LocalDate dataScadenza) {
-        this.dataScadenza = dataScadenza;
-    }
 }
