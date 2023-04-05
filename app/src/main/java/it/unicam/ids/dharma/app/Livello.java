@@ -5,26 +5,25 @@ import java.util.Map;
 
 /**
  * La classe rappresenta un livello del programma a livelli.
+ *
  * @param <T> la tipologia del vantaggio associato al livello.
  */
-public class Livello<T> implements Comparable<Livello<T>>{
+public class Livello<T extends VantaggioFedelta> implements Comparable<Livello<T>> {
 
     private final int numeroLivello;
     private final Map<Cliente, Double> clientiLivello;
     private final T vantaggioLivello;
     private final double soglia;
 
-    public Livello(int numeroLivello, T vantaggioLivello, double soglia) {
+    public Livello(int numeroLivello, T vantaggioLivello) {
         this.numeroLivello = numeroLivello;
         this.clientiLivello = new HashMap<>();
         this.vantaggioLivello = vantaggioLivello;
-        this.soglia = soglia;
+        this.soglia = 100.0;
     }
 
-    public boolean aggiungiCliente(Cliente cliente, double percentualeAvanzamento)
-    {
-        if(!clientiLivello.containsKey(cliente))
-        {
+    public boolean aggiungiCliente(Cliente cliente, double percentualeAvanzamento) {
+        if (!clientiLivello.containsKey(cliente)) {
             clientiLivello.put(cliente, percentualeAvanzamento);
             return true;
         }
@@ -34,18 +33,16 @@ public class Livello<T> implements Comparable<Livello<T>>{
     /**
      * Aumenta la percentuale di avanzamento di un cliente nel livello, dopo che ha effettuato
      * un nuovo acquisto.
-     * @param cliente il cliente nel livello.
+     *
+     * @param cliente  il cliente nel livello.
      * @param acquisto l'acquisto effettuato dal cliente.
      * @return true se la percentuale è stata aumentata correttamente, false altrimenti.
      */
-    public boolean aumentaPercentuale(Cliente cliente, Acquisto acquisto)
-    {
-        if (acquisto.getCliente().equals(cliente))
-        {
-            if (clientiLivello.containsKey(cliente))
-            {
+    public boolean aumentaPercentuale(Cliente cliente, Acquisto acquisto) {
+        if (acquisto.getCliente().equals(cliente)) {
+            if (clientiLivello.containsKey(cliente)) {
                 clientiLivello.replace(cliente, clientiLivello.get(cliente),
-                        (acquisto.totaleAcquisto() * 0.1)+ (clientiLivello.get(cliente)));
+                    (acquisto.totaleAcquisto() * 0.1) + (clientiLivello.get(cliente)));
                 return true;
             }
         }
@@ -61,7 +58,7 @@ public class Livello<T> implements Comparable<Livello<T>>{
     }
 
 
-    public T getVantaggioLivello(){
+    public T getVantaggioLivello() {
         return vantaggioLivello;
     }
 
@@ -72,9 +69,9 @@ public class Livello<T> implements Comparable<Livello<T>>{
 
     @Override
     public int compareTo(Livello<T> o) {
-        if(this.getNumeroLivello() < o.getNumeroLivello()) {
+        if (this.getNumeroLivello() < o.getNumeroLivello()) {
             return -1;
-        } else if(this.getNumeroLivello() > o.getNumeroLivello()) {
+        } else if (this.getNumeroLivello() > o.getNumeroLivello()) {
             return 1;
         }
         return 0;

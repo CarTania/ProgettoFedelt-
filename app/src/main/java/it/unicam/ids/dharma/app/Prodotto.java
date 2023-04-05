@@ -1,12 +1,13 @@
 package it.unicam.ids.dharma.app;
 
+import java.util.Objects;
+
 /**
  * Rappresenta un prodotto venduto da un'azienda.
  */
-public class Prodotto implements Cloneable{
-
-    private String nome;
+public class Prodotto implements Cloneable {
     private final int idProdotto;
+    private final String nome;
     private double prezzo;
     private int quantita;
 
@@ -26,10 +27,6 @@ public class Prodotto implements Cloneable{
 
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public int getIdProdotto() {
@@ -52,8 +49,33 @@ public class Prodotto implements Cloneable{
         this.quantita = quantita;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prodotto prodotto = (Prodotto) o;
+        return idProdotto == prodotto.idProdotto;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idProdotto);
+    }
+
+    @Override
+    public String toString() {
+        return "Prodotto{" +
+            "idProdotto=" + idProdotto +
+            ", nome='" + nome + '\'' +
+            ", prezzo=" + prezzo +
+            ", quantita=" + quantita +
+            '}';
+    }
+
     /**
-     * Ritorna un prodotto singolo.
+     * Ritorna un prodotto singolo (con quantità uguale a uno) decrementando opportunamente la
+     * quantità.
+     *
      * @return il prodotto singolo.
      * @throws CloneNotSupportedException
      */
