@@ -57,4 +57,13 @@ public class Acquisto {
     public Cliente getCliente() {
         return cliente;
     }
+
+    @Override
+    public String toString() {
+        return "Acquisto{" +
+                "dataAcquisto=" + dataAcquisto +
+                ", listaProdotti=" + listaProdotti +
+                ", cliente=" + cliente +
+                '}';
+    }
 }

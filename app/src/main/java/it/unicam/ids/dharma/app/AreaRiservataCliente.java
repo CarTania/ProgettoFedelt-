@@ -17,7 +17,7 @@ public class AreaRiservataCliente implements ICliente{
 
     private List<ProgrammaFedelta> programmiAttivati;
 
-    private List <Prodotto> prodottiAcquistati;
+    private List <Acquisto> acquistiEffettuati;
     @Override
     public void cercaProgrammaFedelta() {
         Scanner s = new Scanner(System.in);
@@ -50,13 +50,12 @@ public class AreaRiservataCliente implements ICliente{
      * Il metodo legge la scelta in input del cliente e la ritorna.
      * @return la scelta effettuata dal cliente.
      */
-    public String effettuaScelta(){
-        String effettuaScelta;
+    public String leggiInput(){
+        String input;
         System.out.println("Scelta => ");
         Scanner scanner = new Scanner(System.in);
-        effettuaScelta= scanner.nextLine();
-        return effettuaScelta;
-
+        input= scanner.nextLine();
+        return input;
     }
 
 
@@ -68,8 +67,16 @@ public class AreaRiservataCliente implements ICliente{
         Optional<List<ProgrammaFedelta>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchNomeAzienda);
     }
 
+    /**
+     * Questo metodo permette di selezionare un programma tra quelli attivabili da un cliente.
+     * @param idProgramma è un intero che rappresenta l'id del programma fedeltà.
+     */
     @Override
-    public void selezionaProgramma(int idProgramma) {
+    public Optional<ProgrammaFedelta> selezionaProgramma(int idProgramma) {
+
+        Predicate<Integer> p= i -> i ==idProgramma;
+
+      return GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
 
     }
 
@@ -80,48 +87,67 @@ public class AreaRiservataCliente implements ICliente{
         Optional<List<ProgrammaFedelta>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchTipologia);
     }
 
+
+    /**
+     * Questo metodo permette di selezionare un programma in base alla tipologia tra quelli attivabili da un cliente.
+     * @param tipologia è una stringa che rappresenta la tipologia.
+     */
     @Override
     public void selezionaTipologiaProgramma(String tipologia) {
-
+        Predicate<String> p= t -> t.equals(tipologia);
+        Optional<ProgrammaFedelta> programmaSelezionato= GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
     }
 
+    /**
+     * Questo metodo permette di visualizzare i programmi attivati dall'azienda.
+     * @param nomeAzienda è una stringa che rappresenta il nome dell'azienda.
+     */
 
     @Override
     public void mostraElencoProgrammiAzienda(String nomeAzienda) {
-
+        Predicate<String> p= t -> t.equals(nomeAzienda);
+        Optional<List<ProgrammaFedelta>> elencoProgrammi= GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
+        if(elencoProgrammi.isPresent()) {
+            for (ProgrammaFedelta programma : elencoProgrammi.get()) {
+                System.out.println(programma);
+            }
+        }
     }
 
     @Override
     public void mostraDettagliProgramma(int idProgramma) {
 
+        Optional<ProgrammaFedelta> programma= this.selezionaProgramma(idProgramma);
+        programma.ifPresent(System.out::println);
     }
 
-    @Override
-    public void mostraElencoTipologie() {
-        System.out.println("1. Programma a punti");
-        System.out.println("2. Programma a Livelli");
-        System.out.println("3. Member Esclusiva");
-        System.out.println("4. Programma Coalizione");
-
-    }
 
     @Override
     public void mostraElencoProgrammiPerTipologia(String tipologia) {
+        Predicate<String> p= t -> t.equals(tipologia);
+        Optional<List<ProgrammaFedelta>> elencoProgrammi= GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
+        if(elencoProgrammi.isPresent()) {
+            for (ProgrammaFedelta programma : elencoProgrammi.get()) {
+                System.out.println(programma);
+            }
+        }
 
     }
 
 
-
     @Override
-    public void acquistaProdotto(Prodotto prodotto) {
+    public void effettuaAcquisto(Prodotto prodotto) {
+
+
+
 
     }
 
 
     @Override
     public void cronologiAcquisti() {
-        for (Prodotto prodotto : prodottiAcquistati) {
-            System.out.println(prodotto);
+        for (Acquisto acquisto: acquistiEffettuati) {
+            System.out.println(acquisto);
         }
     }
 
