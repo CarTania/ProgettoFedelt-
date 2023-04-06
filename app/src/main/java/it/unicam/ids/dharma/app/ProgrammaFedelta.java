@@ -55,4 +55,7 @@ public class ProgrammaFedelta {
         return dataScadenza;
     }
 
+    public int getId() {
+        return id;
+    }
 }

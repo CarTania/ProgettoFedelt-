@@ -55,4 +55,21 @@ public record Magazzino(List<Prodotto> prodottiDisponibili) {
         }
         return Optional.empty();
     }
+
+    /**
+     * Il metodo ha lo scopo di ricercare il prodotto nel magazzino sulla base del nome fornito.
+     * Se il prodotto non è presente allora ritorna <code>Optional.empty()</code>.
+     * @param nome è il nome del prodotto
+     * @return il prodotto, se è presente.
+     */
+
+    public Optional <Prodotto> ricercaProdotto (String nome)
+    {
+        for (Prodotto p : prodottiDisponibili) {
+            if (p.getNome().equals(nome)) {
+                return Optional.of(p);
+            }
+        }
+        return Optional.empty();
+    }
 }

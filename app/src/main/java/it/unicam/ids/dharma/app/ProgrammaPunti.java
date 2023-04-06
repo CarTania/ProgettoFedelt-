@@ -13,6 +13,8 @@ public class ProgrammaPunti extends ProgrammaFedelta{
     private final double costanteCambio;
     private final Optional<Catalogo> catalogoOpzionale;
 
+
+
     /**
      * Costruisce un programma a punti con un catalogo premi associato.
      *
@@ -149,5 +151,9 @@ public class ProgrammaPunti extends ProgrammaFedelta{
         Coupon coupon = new Coupon(cliente, dataScadenza, punti * costanteCambio);
         this.decrementaPuntiCliente(cliente, punti);
         return coupon;
+    }
+
+    public Optional<Catalogo> getCatalogoOpzionale() {
+        return catalogoOpzionale;
     }
 }
