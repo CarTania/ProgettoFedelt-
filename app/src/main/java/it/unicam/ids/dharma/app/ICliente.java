@@ -17,12 +17,12 @@ public interface ICliente {
     public void mostraElencoProgrammiAzienda (String nomeAzienda);
     public void mostraDettagliProgramma (int idProgramma);
     public void mostraElencoProgrammiPerTipologia(String tipologia);
-    public void effettuaAcquisto(Prodotto prodotto);
+    public void effettuaAcquisto(Magazzino magazzino) throws CloneNotSupportedException;
     public void cronologiAcquisti();
     public void visualizzaCatalogoPremi(int idProgramma);
-    public void riscattaVantaggio(ProgrammaPunti p, int punti);
+    public void riscattaVantaggioProgrammaPunti(ProgrammaPunti p, int punti);
     public void riscattaPremio (Prodotto p);
-    public void ottieniCouponSconto(int punti);
+    public void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti);
 
 }
 
