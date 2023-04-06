@@ -17,12 +17,12 @@ public class ProgrammaLivelliTest {
 
         List<Coupon> vantaggi = List.of(
             new Coupon(c1, LocalDate.of(2023, 12, 6), 50),
-            new Coupon(c1, LocalDate.of(2023, 11, 6), 60),
-            new Coupon(c1, LocalDate.of(2023, 7, 23), 32)
+            new Coupon(c2, LocalDate.of(2023, 11, 6), 60),
+            new Coupon(c3, LocalDate.of(2023, 7, 23), 32)
         );
 
         ProgrammaLivelli<Coupon> p = new ProgrammaLivelli<>(
-            3, vantaggi, LocalDate.of(2023, 12, 31)
+           1243 ,3, vantaggi, LocalDate.of(2023, 12, 31)
         );
         //controllo della correttezza del numero dei livelli e dell'assegnamento
         for (int i = 0; i < p.getLivelliProgramma().size(); i++) {
@@ -32,12 +32,12 @@ public class ProgrammaLivelliTest {
 
         List<Coupon> vantaggi2 = List.of(
             new Coupon(c1, LocalDate.of(2023, 12, 6), 50),
-            new Coupon(c1, LocalDate.of(2023, 11, 6), 60)
+            new Coupon(c2, LocalDate.of(2023, 11, 6), 60)
         );
 
         assertThrows(
             IllegalArgumentException.class, () -> new ProgrammaLivelli<>(
-                3, vantaggi2, LocalDate.of(2023, 12, 31)
+                154,3, vantaggi2, LocalDate.of(2023, 12, 31)
             )
         );
     }
@@ -54,7 +54,7 @@ public class ProgrammaLivelliTest {
         );
 
         ProgrammaLivelli<Coupon> p = new ProgrammaLivelli<>(
-            3, vantaggi, LocalDate.of(2023, 12, 31)
+            152,3, vantaggi, LocalDate.of(2023, 12, 31)
         );
 
         p.getLivelliProgramma().get(0).aggiungiCliente(c1, 0.0);
@@ -71,12 +71,12 @@ public class ProgrammaLivelliTest {
 
         List<Coupon> vantaggi = List.of(
             new Coupon(c1, LocalDate.of(2023, 12, 6), 50),
-            new Coupon(c1, LocalDate.of(2023, 11, 6), 60),
-            new Coupon(c1, LocalDate.of(2023, 7, 23), 32)
+            new Coupon(c2, LocalDate.of(2023, 11, 6), 60),
+            new Coupon(c3, LocalDate.of(2023, 7, 23), 32)
         );
 
         ProgrammaLivelli<Coupon> p = new ProgrammaLivelli<>(
-            3, vantaggi, LocalDate.of(2023, 12, 31)
+           235, 3, vantaggi, LocalDate.of(2023, 12, 31)
         );
 
         p.getLivelliProgramma().get(0).aggiungiCliente(c1, 0.0);
