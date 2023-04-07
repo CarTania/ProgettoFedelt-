@@ -106,12 +106,11 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param cliente il cliente che vuole riscattare il premio.
      * @return la lista dei premi riscattabili dal cliente con i punti indicati.
      */
-    public List<Prodotto> premiRiscattabiliCliente(Cliente cliente, int punti) {
+    public List<Premio> premiRiscattabiliCliente(Cliente cliente, int punti) {
         if (catalogoOpzionale.isPresent()) {
             if (clientiIscritti.get(cliente) >= punti) {
                 return catalogoOpzionale.get().getListapremi().stream()
                     .filter(p -> p.getPuntiPremio() <= punti)
-                    .map(Premio::getPremio)
                     .toList();
             } else throw new IllegalArgumentException("Il cliente non possiede la quantità di punti indicata.");
         } else throw new IllegalStateException("Nessun catalogo associato a questo programma.");
@@ -121,14 +120,14 @@ public class ProgrammaPunti extends ProgrammaFedelta{
     /**
      * Permette a un cliente di riscattare un premio dal catalogo associato al programma, se presente.
      *
-     * @param punti   punti che si vogliono utilizzare per riscattare un premio.
      * @param cliente il cliente che vuole riscattare un premio.
      * @return il premio ottenuto.
      */
-    public Optional<Prodotto> riscattoPremioCatalogo(Cliente cliente, Premio premio, int punti) {
-        if (premiRiscattabiliCliente(cliente, punti).contains(premio.getPremio())) {
+    public Optional<Premio> riscattoPremioCatalogo(Cliente cliente, Premio premio) {
+        if (premiRiscattabiliCliente(cliente, this.clientiIscritti.get(cliente)).contains(premio))
+        {
             if (catalogoOpzionale.isPresent()) {
-                Optional<Prodotto> premioRiscattato = this.catalogoOpzionale.get().emettiPremio(premio);
+                Optional<Premio> premioRiscattato = this.catalogoOpzionale.get().emettiPremio(premio);
                 int indicePremio = catalogoOpzionale.get().getListapremi().indexOf(premio);
                 int puntiDaScalare = catalogoOpzionale.get().getListapremi().get(indicePremio).getPuntiPremio();
                 this.decrementaPuntiCliente(cliente, puntiDaScalare);

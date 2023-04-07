@@ -215,16 +215,16 @@ public class AreaRiservataCliente implements ICliente {
                 "1. Riscatta un premio /n 2. Ottieni Coupon Sconto");
             inputCliente = s.nextLine();
             if (inputCliente.equals("1")) {
-                List<Prodotto> premiRiscattabili = p.premiRiscattabiliCliente(this.cliente, punti);
-                this.visualizzaPremiRiscattabil(premiRiscattabili);
+                List<Premio> premiRiscattabili = p.premiRiscattabiliCliente(this.cliente, punti);
+                this.visualizzaPremiRiscattabili(premiRiscattabili);
                 String inputPremio;
                 System.out.println("Inserisci il nome del premio che vuoi riscattare: ");
                 inputPremio = s.nextLine();
                 boolean premioPresente = false;
-                for (Prodotto prodotto : premiRiscattabili) {
-                    if (prodotto.getNome().equals(inputPremio)) {
-                        this.riscattaPremio(prodotto);
-                        System.out.println("Hai riscattato il seguente premio: " + prodotto.getNome());
+                for (Premio premio: premiRiscattabili) {
+                    if (premio.getPremio().getNome().equals(inputPremio)) {
+                        this.riscattaPremio(premio, p);
+                        System.out.println("Hai riscattato il seguente premio: " + premio.getPremio().getNome());
                         premioPresente = true;
                         acquisizioneInput = false;
                     }
@@ -239,24 +239,28 @@ public class AreaRiservataCliente implements ICliente {
         }
     }
 
-    private void visualizzaPremiRiscattabil(List<Prodotto> premiRiscattabili) {
-        for (Prodotto p : premiRiscattabili) {
-            System.out.println("Premio: " + p.getNome());
+    private void visualizzaPremiRiscattabili(List<Premio> premiRiscattabili) {
+        for (Premio p : premiRiscattabili) {
+            System.out.println("Premio: " + p.getPremio().getNome());
         }
     }
 
-    /**
-     * @param p
+    /** Questo metodo permette di riscattare un premio.
+     * @param p rappresenta il premio.
+     * @param programmaPunti
      */
 
     @Override
-    public void riscattaPremio(Prodotto p) {
+    public void riscattaPremio(Premio p, ProgrammaPunti programmaPunti) {
 
+        Optional<Premio> premio = programmaPunti.riscattoPremioCatalogo(cliente, p);
+        premio.ifPresent(this.vantaggiRiscattati::add);
 
     }
 
-    /**
-     * @param punti
+    /** Questo metodo permettere di ottenere un coupon Sconto.
+     * @param punti rappresenta i punti del cliente.
+     * @param programmaPunti rappresenta il programma Punti a cui il cliente è iscritto.
      */
     public void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti) {
         Coupon coupon = programmaPunti.generaCoupon(this.cliente, punti, programmaPunti.getDataScadenza());

@@ -21,7 +21,7 @@ public interface ICliente {
     public void cronologiAcquisti();
     public void visualizzaCatalogoPremi(int idProgramma);
     public void riscattaVantaggioProgrammaPunti(ProgrammaPunti p, int punti);
-    public void riscattaPremio (Prodotto p);
+    public void riscattaPremio (Premio p, ProgrammaPunti programmaPunti);
     public void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti);
 
 }
