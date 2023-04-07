@@ -11,7 +11,7 @@ public interface ICliente {
     public void cercaProgrammaFedelta();
     public void apriMenuRicerca();
     public void cercaPerAzienda(String nomeAzienda);
-    public Optional<ProgrammaFedelta> selezionaProgramma (int idProgramma);
+    public Optional<ElementoDB> selezionaProgramma (int idProgramma);
     public void cercaPerTipologia(String tipologia);
     public void selezionaTipologiaProgramma(String tipologia);
     public void mostraElencoProgrammiAzienda (String nomeAzienda);

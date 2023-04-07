@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Rappresenta un cliente iscritto alla piattaforma.
  */
-public record Cliente(int id, String name, int eta, String email) {
+public record Cliente(int id, String name, int eta, String email) implements  ElementoDB{
 
     //"id" verrà generato in qualche metodo.
 

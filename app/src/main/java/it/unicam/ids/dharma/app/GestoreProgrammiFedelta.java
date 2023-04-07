@@ -9,7 +9,7 @@ import java.util.function.Predicate;
  * E' stato usato il Singleton design pattern al fine di ottenere una singola istanza
  * della classe.
  */
-public class GestoreProgrammiFedelta implements Gestore<ProgrammaFedelta> {
+public class GestoreProgrammiFedelta implements Gestore<ElementoDB> {
     private static GestoreProgrammiFedelta gestoreProgrammi;
 
     private GestoreProgrammiFedelta() {
@@ -21,28 +21,29 @@ public class GestoreProgrammiFedelta implements Gestore<ProgrammaFedelta> {
         return gestoreProgrammi;
     }
 
+
     @Override
-    public <V> Optional<List<ProgrammaFedelta>> ottieniElenco(Predicate<V> p) {
+    public <V> Optional<List<ElementoDB>> ottieniElenco(Predicate<V> p) {
         return Optional.empty();
     }
 
     @Override
-    public <V> Optional<ProgrammaFedelta> ottieniElemento(Predicate<V> p) {
+    public <V> Optional<ElementoDB> ottieniElemento(Predicate<V> p) {
         return Optional.empty();
     }
 
     @Override
-    public boolean inserisci(ProgrammaFedelta elem) {
+    public boolean inserisci(ElementoDB elem) {
         return false;
     }
 
     @Override
-    public boolean rimuovi(ProgrammaFedelta elem) {
+    public boolean rimuovi(ElementoDB elem) {
         return false;
     }
 
     @Override
-    public ProgrammaFedelta modificaElemento(ProgrammaFedelta elem) {
+    public ElementoDB modificaElemento(ElementoDB elem) {
         return null;
     }
 }
