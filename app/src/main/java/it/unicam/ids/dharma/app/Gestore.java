@@ -8,7 +8,7 @@ import java.util.function.Predicate;
  * L'interfaccia Gestore definisce le operazioni necessarie per gestire l'interazione
  * con il database.
  */
-public interface Gestore <T> {
+public interface Gestore <T extends ElementoDB> {
     /**
      * Recupera un elenco di elementi che soddisfano un dato predicato dal db.
      *

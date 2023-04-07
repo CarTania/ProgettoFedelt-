@@ -6,7 +6,7 @@ import java.time.Period;
 /**
  * La classe astratta rappresenta un generico programma fedeltà.
  */
-public class ProgrammaFedelta {
+public class ProgrammaFedelta implements ElementoDB {
 
     private final int id;
 
