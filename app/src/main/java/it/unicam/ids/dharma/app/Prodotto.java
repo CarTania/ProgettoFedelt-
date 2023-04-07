@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Rappresenta un prodotto venduto da un'azienda.
  */
-public class Prodotto {
+public class Prodotto implements  ElementoDB {
     private final int idProdotto;
     private final String nome;
     private double prezzo;

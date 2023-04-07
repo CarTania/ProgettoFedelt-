@@ -1,4 +1,4 @@
-package it.unicam.ids.dharma.test;
+package it.unicam.ids.dharma.app;
 
 import it.unicam.ids.dharma.app.Magazzino;
 import it.unicam.ids.dharma.app.Prodotto;

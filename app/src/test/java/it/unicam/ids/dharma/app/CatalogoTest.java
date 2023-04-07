@@ -92,7 +92,7 @@ public class CatalogoTest {
         Prodotto prodotto7 = m.aggiungiProdotto("scarpe", 30, 4);
         Premio premio = new Premio(prodotto7, 4, 10);
         c.inserisciPremio(premio);
-        Optional<Prodotto> premioAcquisito = c.emettiPremio(premio);
+        Optional<Premio> premioAcquisito = c.emettiPremio(premio);
         assertTrue(premioAcquisito.isPresent());
 
         int indicePremio = c.getListapremi().indexOf(premio);

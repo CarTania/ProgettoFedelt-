@@ -11,7 +11,7 @@ import java.util.Objects;
  * @param azienda    l'azienda che gestisce il titolare.
  * @param email      l' indirizzo email del titolare.
  */
-public record Titolare(int id, String nome, int partitaIva, String azienda, String email) {
+public record Titolare(int id, String nome, int partitaIva, String azienda, String email) implements  ElementoDB{
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
