@@ -1,7 +1,7 @@
 package it.unicam.ids.dharma.app;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -9,44 +9,44 @@ import java.util.Optional;
  */
 public class Catalogo {
     private final int id;
-    private final Map<Prodotto, AttributiPremio> listapremi;
+    private final List<Premio> listapremi;
 
     public Catalogo(int id) {
         this.id = id;
-        this.listapremi = new HashMap<>();
+        this.listapremi = new ArrayList<>();
     }
+
     public int getId() {
         return id;
     }
-    public Map<Prodotto, AttributiPremio> getListapremi() {
+
+    public List<Premio> getListapremi() {
         return listapremi;
     }
 
     /**
-     * Inserisce un nuovo premio nel catalogo, se disponibile nello stock dei prodotti.
-     * @param prodotto il prodotto da inserire come premio.
-     * @param quantita il numero di unità del premio che si vuole inserire nel catalogo.
-     * @param punti i punti che si vogliono associare al premio.
-     * @return true se l'inserimento è avvenuto correttamente, false altrimenti.
+     * Inserisce un nuovo premio nel catalogo.
+     *
+     * @param premio il premio da inserire.
+     * @return true se il premio è stato inserito correttamente, false altrimenti.
      */
-    public boolean inserisciPremio(Prodotto prodotto, int quantita, int punti)
-    {
-        if(!(listapremi.containsKey(prodotto)))
-        {
-            //se c'è una quantità sufficiente di quel prodotto, lo inserisco nel catalogo
-            if(prodotto.getQuantita() >= quantita){
-                listapremi.put(prodotto, new AttributiPremio(quantita, punti));
-                prodotto.setQuantita(prodotto.getQuantita() - quantita);
-                return true;
-            }
+    public boolean inserisciPremio(Premio premio) {
+        if (!(listapremi.contains(premio))) {
+            listapremi.add(premio);
+            return true;
         }
         return false;
     }
-    public boolean rimuoviPremio(Prodotto prodotto)
-    {
-        if (listapremi.containsKey(prodotto))
-        {
-            listapremi.remove(prodotto);
+
+    /**
+     * Rimuove un premio dal catalogo.
+     *
+     * @param premio il premio da rimuovere.
+     * @return true se il premio è stato rimosso correttamente, false altrimenti.
+     */
+    public boolean rimuoviPremio(Premio premio) {
+        if (listapremi.contains(premio)) {
+            listapremi.remove(premio);
             return true;
         }
         return false;
@@ -54,27 +54,49 @@ public class Catalogo {
 
     /**
      * Assegna un numero di punti diverso a uno specifico premio.
-     * @param prodotto il premio che si vuole modificare.
-     * @param punti la nuova quantità di punti che si vuole associare al premio.
+     *
+     * @param premio il premio che si vuole modificare.
+     * @param punti  la nuova quantità di punti che si vuole associare al premio.
      * @return true se l'aggiornamento è avvenuto con successo, false altrimenti.
      */
-    public boolean aggiornaPuntiPremio(Prodotto prodotto, int punti){
-        if(listapremi.containsKey(prodotto)){
-            listapremi.get(prodotto).setPuntiPremio(punti);
-            return true;
+    public boolean aggiornaPuntiPremio(Premio premio, int punti) {
+        if (listapremi.contains(premio)) {
+            int indicePremio = listapremi.indexOf(premio);
+            if (premio.getPuntiPremio() > punti) {
+                int decremento = premio.getPuntiPremio() - punti;
+                listapremi.get(indicePremio).decrementaPuntiPremio(decremento);
+                return true;
+            } else if (premio.getPuntiPremio() < punti) {
+                int aumento = punti - premio.getPuntiPremio();
+                listapremi.get(indicePremio).aumentaPuntiPremio(aumento);
+                return true;
+            }
         }
         return false;
     }
+
     /**
      * Assegna un numero di unità diverso a uno specifico premio.
-     * @param prodotto il premio che si vuole modificare.
+     *
+     * @param premio   il premio che si vuole modificare.
      * @param quantita il nuovo numero di unità di quel premio.
      * @return true se l'aggiornamento è avvenuto con successo, false altrimenti.
      */
-    public boolean aggiornaQuantitaPremio(Prodotto prodotto, int quantita){
-        if(listapremi.containsKey(prodotto)){
-            if(prodotto.getQuantita() >= quantita){
-                listapremi.get(prodotto).setQuantitaPremio(quantita);
+    public boolean aggiornaQuantitaPremio(Premio premio, int quantita) {
+        if (listapremi.contains(premio)) {
+            int indicePremio = listapremi.indexOf(premio);
+
+            if (listapremi.get(indicePremio).getQuantitaPremio() < quantita) {
+                int aumento = quantita - listapremi.get(indicePremio).getQuantitaPremio();
+                if(Magazzino.getMagazzino().getProdottiDisponibili().get(premio.getPremio()) >= aumento){
+                    listapremi.get(indicePremio).aumentaQuantitaPremio(aumento);
+                    return true;
+                }else
+                    return false;
+            } else if (listapremi.get(indicePremio).getQuantitaPremio() > quantita
+                && listapremi.get(indicePremio).getQuantitaPremio() - quantita > 0) {
+                int decremento = listapremi.get(indicePremio).getQuantitaPremio() - quantita;
+                listapremi.get(indicePremio).decrementaQuantitaPremio(decremento);
                 return true;
             }
         }
@@ -85,50 +107,20 @@ public class Catalogo {
      * Il metodo viene chiamato quando un premio viene riscosso da un cliente.
      * La quantità dello specifico premio viene decrementata di un' unità e il prodotto
      * viene restituito (se ci sono ancora unità disponibili).
-     * @param prodotto il premio che deve essere emesso.
+     *
+     * @param premio il premio che deve essere emesso.
      * @return il premio, se disponibile.
-     * @throws CloneNotSupportedException
      */
-    public Optional<Prodotto> emettiPremio(Prodotto prodotto) throws CloneNotSupportedException {
-        if(listapremi.containsKey(prodotto)){
+    public Optional<Prodotto> emettiPremio(Premio premio) {
+        if (listapremi.contains(premio)) {
+            int indicePremio = listapremi.indexOf(premio);
             //se il premio è disponibile nel catalogo
-            if(listapremi.get(prodotto).getQuantitaPremio() != 0){
-                aggiornaQuantitaPremio(prodotto,
-                    listapremi.get(prodotto).getQuantitaPremio() - 1);
-                return Optional.ofNullable(prodotto.ottieniProdotto());
+            if (listapremi.get(indicePremio).getQuantitaPremio() != 0) {
+                listapremi.get(indicePremio).decrementaQuantitaPremio(1);
+                return Optional.of(listapremi.get(indicePremio).getPremio());
             }
         }
-        return null;
-    }
-
-    /**
-     * Classe annidata che rappresenta gli attributi di un premio (quantità e punti
-     * associati al premio) presente nel catalogo.
-     */
-    class AttributiPremio{
-        private int quantita;
-        private int punti;
-
-        public AttributiPremio(int quantita, int punti) {
-            this.quantita = quantita;
-            this.punti = punti;
-        }
-
-        public int getQuantitaPremio() {
-            return quantita;
-        }
-
-        public void setQuantitaPremio(int quantita) {
-            this.quantita = quantita;
-        }
-
-        public int getPuntiPremio() {
-            return punti;
-        }
-
-        public void setPuntiPremio(int punti) {
-            this.punti = punti;
-        }
+        return Optional.empty();
     }
 }
 

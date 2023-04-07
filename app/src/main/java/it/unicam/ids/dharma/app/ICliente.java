@@ -17,7 +17,7 @@ public interface ICliente {
     public void mostraElencoProgrammiAzienda (String nomeAzienda);
     public void mostraDettagliProgramma (int idProgramma);
     public void mostraElencoProgrammiPerTipologia(String tipologia);
-    public void effettuaAcquisto(Magazzino magazzino) throws CloneNotSupportedException;
+    public void effettuaAcquisto() throws CloneNotSupportedException;
     public void cronologiAcquisti();
     public void visualizzaCatalogoPremi(int idProgramma);
     public void riscattaVantaggioProgrammaPunti(ProgrammaPunti p, int punti);
