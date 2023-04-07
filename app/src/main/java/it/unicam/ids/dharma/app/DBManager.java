@@ -3,23 +3,52 @@ package it.unicam.ids.dharma.app;
 import java.sql.*;
 
 public class DBManager {
-    public static void main(String[] args) {
-        try{
-            //esegue la connessione al db "loyaltyplatformdb"
-            Connection c = DriverManager.
-                getConnection("jdbc:postgresql://trumpet.db.elephantsql.com/zkrfpfxy",
-                    "zkrfpfxy", "d_-OlqLSNapgRgEo7Tax8KsJyctXDUDg");
-            //
-            Statement stm = c.createStatement();
+    private static DBManager gestoreDb;
+    private final String url, user, password;
+    private Connection c;
 
-            ResultSet res = stm.executeQuery("select * from clienti;");
+    private DBManager() {
+        this.url = "jdbc:postgresql://trumpet.db.elephantsql.com/zkrfpfxy";
+        this.user = "zkrfpfxy";
+        this.password = "d_-OlqLSNapgRgEo7Tax8KsJyctXDUDg";
+        this.c = null;
+    }
 
-            while(res.next()){
-                System.out.println("id: "+res.getString("id_cliente")+", "+
-                    "nome: "+res.getString("nome_cliente"));
-            }
-        }catch (Exception e){
+    public static DBManager getGestoreDb(){
+        if (gestoreDb == null)
+            gestoreDb = new DBManager();
+        return gestoreDb;
+    }
+
+    /**
+     * Effettua la connessione con il database remoto.
+     */
+    private void connect() {
+        try {
+            Class.forName(("org.postgresql.Driver"));
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver postgres non trovato.");
             e.printStackTrace();
+        }
+        try {
+            c = DriverManager.getConnection(url,
+                user, password);
+            System.out.println("Database connesso");
+        } catch (SQLException e) {
+            System.out.println("Problema nell'aprire la connessione");
+            e.printStackTrace();
+        }
+    }
+
+    public <T extends ElementoDB> void inserisci(T elem){
+        DBManager.getGestoreDb().connect();
+        if(elem instanceof Prodotto){
+            try {
+                Statement stm = c.createStatement();
+                ResultSet res = stm.executeQuery("insert into prodotti values ");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }
