@@ -1,9 +1,7 @@
 package it.unicam.ids.dharma.app;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 import java.util.function.Predicate;
 
 import static it.unicam.ids.dharma.app.GestoreProgrammiFedelta.getGestoreProgrammi;
@@ -13,12 +11,17 @@ import static it.unicam.ids.dharma.app.GestoreProgrammiFedelta.getGestoreProgram
  * operazioni di suo interesse.
  */
 public class AreaRiservataCliente implements ICliente {
-    private Cliente cliente;
-    private List<ProgrammaFedelta> programmiAttivati;
-    private List <VantaggioFedelta> vantaggiRiscattati;
-    private List<Acquisto> acquistiEffettuati;
+    private final Cliente cliente;
+    private final List<ProgrammaFedelta> programmiAttivati;
+    private final List<VantaggioFedelta> vantaggiRiscattati;
+    private final List<Acquisto> acquistiEffettuati;
 
-    //TODO Aggiungere costruttore.
+    public AreaRiservataCliente(Cliente cliente) {
+        this.cliente = Objects.requireNonNull(cliente);
+        this.programmiAttivati = new ArrayList<>();
+        this.vantaggiRiscattati = new ArrayList<>();
+        this.acquistiEffettuati = new ArrayList<>();
+    }
 
     @Override
     public void cercaProgrammaFedelta() {
@@ -144,20 +147,20 @@ public class AreaRiservataCliente implements ICliente {
      * Il metodo permette di effettuare un acquisto dal magazzino.
      * Il metodo prende in input i nomi dei prodotti inseriti dal cliente e se presenti li aggiunge ad un nuovo acquisto.
      * L'acquisto viene aggiunto agli acquisti effettuati dal cliente.
-     *
-     * @param magazzino prodotti in vendita.
-     * @throws CloneNotSupportedException lancia l'eccezione.
      */
 
     @Override
-    public void effettuaAcquisto(Magazzino magazzino) throws CloneNotSupportedException {
+    public void effettuaAcquisto() {
         Scanner s = new Scanner(System.in);
         Acquisto acquisto = new Acquisto(LocalDate.now(), this.cliente);
         while (s.hasNext()) {
             String nomeProdotto = s.nextLine();
-            if (magazzino.ricercaProdotto(nomeProdotto).isPresent()) {
-                Prodotto p = magazzino.ricercaProdotto(nomeProdotto).get().ottieniProdotto();
-                acquisto.aggiungiProdotto(p);
+            if (Magazzino.getMagazzino().ricercaProdotto(nomeProdotto).isPresent()) {
+                Optional<Prodotto> prodottoDaAcquistare =
+                    Magazzino.getMagazzino().prelevaProdotto(
+                        Magazzino.getMagazzino().ricercaProdotto(nomeProdotto).get()
+                    );
+                prodottoDaAcquistare.ifPresent(acquisto::aggiungiProdotto);
             }
         }
         acquistiEffettuati.add(acquisto);
@@ -177,15 +180,12 @@ public class AreaRiservataCliente implements ICliente {
 
     @Override
     public void visualizzaCatalogoPremi(int idProgramma) {
-
         for (ProgrammaFedelta p : programmiAttivati) {
             if (p.getId() == idProgramma) {
                 if (p instanceof ProgrammaPunti programmaPunti) {
                     if (programmaPunti.getCatalogoOpzionale().isPresent()) {
                         programmaPunti.getCatalogoOpzionale().get().getListapremi()
-                                .forEach((key, value) -> System.out.println("Premio: " + key
-                                        + ", Punti: " + value.getPuntiPremio()
-                                        + ", Quantità: " + value.getQuantitaPremio()));
+                            .forEach(System.out::println);
                     }
                 }
             }
@@ -198,18 +198,21 @@ public class AreaRiservataCliente implements ICliente {
      * Il metodo ha l'obiettivo di permettere al cliente di riscattare il vantaggio dal programma punti:
      * al cliente è richiesto di selezionare una delle modalità di riscatto del vantaggio (premio dal catalogo oppure un coupon
      * sconto).
-     * @param p rappresenta il Programma a punti.
+     *
+     * @param p     rappresenta il Programma a punti.
      * @param punti rappresenta i punti che il cliente vuole utilizzare per riscattare il vantaggio.
      */
 
     @Override
     public void riscattaVantaggioProgrammaPunti(ProgrammaPunti p, int punti) {
-
         Scanner s = new Scanner(System.in);
+        boolean acquisizioneInput = true;
         String inputCliente;
 
-        while (true) {
-            System.out.println("Seleziona una delle seguenti opzioni: /n 1. Riscatta un premio /n 2. Ottieni Coupon Sconto");
+
+        while (acquisizioneInput) {
+            System.out.println("Seleziona una delle seguenti opzioni:/n " +
+                "1. Riscatta un premio /n 2. Ottieni Coupon Sconto");
             inputCliente = s.nextLine();
             if (inputCliente.equals("1")) {
                 List<Prodotto> premiRiscattabili = p.premiRiscattabiliCliente(this.cliente, punti);
@@ -217,17 +220,21 @@ public class AreaRiservataCliente implements ICliente {
                 String inputPremio;
                 System.out.println("Inserisci il nome del premio che vuoi riscattare: ");
                 inputPremio = s.nextLine();
+                boolean premioPresente = false;
                 for (Prodotto prodotto : premiRiscattabili) {
                     if (prodotto.getNome().equals(inputPremio)) {
                         this.riscattaPremio(prodotto);
                         System.out.println("Hai riscattato il seguente premio: " + prodotto.getNome());
+                        premioPresente = true;
+                        acquisizioneInput = false;
                     }
                 }
-                System.out.println("Premio non presente: seleziona un altro premio.");
+                if (!premioPresente)
+                    System.out.println("Premio non presente: seleziona un altro premio.");
             }
             if (inputCliente.equals("2")) {
                 this.ottieniCouponSconto(p, punti);
-                break;
+                acquisizioneInput = false;
             }
         }
     }
@@ -239,7 +246,6 @@ public class AreaRiservataCliente implements ICliente {
     }
 
     /**
-     *
      * @param p
      */
 
@@ -247,17 +253,13 @@ public class AreaRiservataCliente implements ICliente {
     public void riscattaPremio(Prodotto p) {
 
 
-
     }
 
     /**
-     *
      * @param punti
      */
-    public void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti)
-    {
-        Coupon coupon= programmaPunti.generaCoupon(this.cliente, punti, programmaPunti.getDataScadenza());
+    public void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti) {
+        Coupon coupon = programmaPunti.generaCoupon(this.cliente, punti, programmaPunti.getDataScadenza());
         this.vantaggiRiscattati.add(coupon);
     }
-
 }

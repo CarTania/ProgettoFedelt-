@@ -3,6 +3,7 @@ package it.unicam.ids.dharma.app;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * La classe rappresenta un acquisto effettuato da un cliente. E' composto da una lista di prodotti
@@ -19,28 +20,30 @@ public class Acquisto {
     public Acquisto(LocalDate dataAcquisto, Cliente cliente) {
         this.dataAcquisto = dataAcquisto;
         this.cliente = cliente;
-        this.listaProdotti= new ArrayList<>();
+        this.listaProdotti = new ArrayList<>();
     }
 
-    public boolean aggiungiProdotto(Prodotto prodotto)
-    {
-        return this.listaProdotti.add(prodotto);
-
+    public boolean aggiungiProdotto(Prodotto prodotto) {
+        if(Magazzino.getMagazzino().getProdottiDisponibili().containsKey(prodotto)){
+            Optional<Prodotto> prodottoDaAcquistare = Magazzino.getMagazzino().prelevaProdotto(prodotto);
+            if(prodottoDaAcquistare.isPresent()){
+                this.listaProdotti.add(prodotto);
+                return true;
+            }
+        }
+        return false;
     }
 
-    public boolean rimuoviProdotto(Prodotto prodotto)
-    {
+    public boolean rimuoviProdotto(Prodotto prodotto) {
         return this.listaProdotti.remove(prodotto);
     }
 
 
-    public double totaleAcquisto()
-    {
-        double sum= 0;
+    public double totaleAcquisto() {
+        double sum = 0;
 
-        for (Prodotto p: listaProdotti)
-        {
-            sum+= p.getPrezzo();
+        for (Prodotto p : listaProdotti) {
+            sum += p.getPrezzo();
         }
         return sum;
     }
@@ -61,9 +64,9 @@ public class Acquisto {
     @Override
     public String toString() {
         return "Acquisto{" +
-                "dataAcquisto=" + dataAcquisto +
-                ", listaProdotti=" + listaProdotti +
-                ", cliente=" + cliente +
-                '}';
+            "dataAcquisto=" + dataAcquisto +
+            ", listaProdotti=" + listaProdotti +
+            ", cliente=" + cliente +
+            '}';
     }
 }
