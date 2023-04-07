@@ -111,13 +111,13 @@ public class Catalogo {
      * @param premio il premio che deve essere emesso.
      * @return il premio, se disponibile.
      */
-    public Optional<Prodotto> emettiPremio(Premio premio) {
+    public Optional<Premio> emettiPremio(Premio premio) {
         if (listapremi.contains(premio)) {
             int indicePremio = listapremi.indexOf(premio);
             //se il premio è disponibile nel catalogo
             if (listapremi.get(indicePremio).getQuantitaPremio() != 0) {
                 listapremi.get(indicePremio).decrementaQuantitaPremio(1);
-                return Optional.of(listapremi.get(indicePremio).getPremio());
+                return Optional.of(listapremi.get(indicePremio));
             }
         }
         return Optional.empty();
