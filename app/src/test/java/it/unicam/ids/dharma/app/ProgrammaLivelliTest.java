@@ -1,5 +1,6 @@
 package it.unicam.ids.dharma.app;
 
+import it.unicam.ids.dharma.app.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -65,6 +66,7 @@ public class ProgrammaLivelliTest {
     }
     @Test
     public void aggiornaLivelloTest(){
+        Magazzino m = Magazzino.getMagazzino();
         Cliente c1 = new Cliente(1, "Roberto", 40, "roberto@gmail.com");
         Cliente c2 = new Cliente(1, "Sara", 32, "sara@gmail.com");
         Cliente c3 = new Cliente(1, "Alessandro", 50, "alessandro@gmail.com");
@@ -83,7 +85,7 @@ public class ProgrammaLivelliTest {
         p.getLivelliProgramma().get(1).aggiungiCliente(c2, 95);
         p.getLivelliProgramma().get(2).aggiungiCliente(c3, 95);
 
-        Prodotto prodotto = new Prodotto("SSD", 1, 50, 10);
+        Prodotto prodotto = m.aggiungiProdotto("SSD", 50, 100);
         Acquisto a1 = new Acquisto(LocalDate.now(), c2);
         a1.aggiungiProdotto(prodotto);
         Acquisto a2 = new Acquisto(LocalDate.now(), c3);
