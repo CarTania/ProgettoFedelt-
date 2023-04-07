@@ -1,5 +1,6 @@
-package it.unicam.ids.dharma.app;
+package it.unicam.ids.dharma.test;
 
+import it.unicam.ids.dharma.app.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
