@@ -93,7 +93,7 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param acquisto l'acquisto effettuato dal cliente.
      */
     public void ottieniPunti(Cliente cliente, Acquisto acquisto) {
-        int puntiOttenuti = (int) Math.round(acquisto.totaleAcquisto() / costanteCambio);
+        int puntiOttenuti = (int) (acquisto.totaleAcquisto() * costanteCambio);
         this.incrementaPuntiCliente(cliente, puntiOttenuti);
     }
 
@@ -108,10 +108,10 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      */
     public List<Prodotto> premiRiscattabiliCliente(Cliente cliente, int punti) {
         if (catalogoOpzionale.isPresent()) {
-            if (clientiIscritti.get(cliente) > punti) {
-                return catalogoOpzionale.get().getListapremi().entrySet().stream()
-                    .filter(e -> e.getValue().getPuntiPremio() <= punti)
-                    .map(Map.Entry::getKey)
+            if (clientiIscritti.get(cliente) >= punti) {
+                return catalogoOpzionale.get().getListapremi().stream()
+                    .filter(p -> p.getPuntiPremio() <= punti)
+                    .map(Premio::getPremio)
                     .toList();
             } else throw new IllegalArgumentException("Il cliente non possiede la quantità di punti indicata.");
         } else throw new IllegalStateException("Nessun catalogo associato a questo programma.");
@@ -125,14 +125,14 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param cliente il cliente che vuole riscattare un premio.
      * @return il premio ottenuto.
      */
-    public Optional<Prodotto> riscattoPremioCatalogo(Cliente cliente, Prodotto prodotto, int punti)
-        throws CloneNotSupportedException {
-        if (premiRiscattabiliCliente(cliente, punti).contains(prodotto)) {
+    public Optional<Prodotto> riscattoPremioCatalogo(Cliente cliente, Premio premio, int punti) {
+        if (premiRiscattabiliCliente(cliente, punti).contains(premio.getPremio())) {
             if (catalogoOpzionale.isPresent()) {
-                Optional<Prodotto> premio = this.catalogoOpzionale.get().emettiPremio(prodotto);
-                int puntiDaScalare = catalogoOpzionale.get().getListapremi().get(prodotto).getPuntiPremio();
+                Optional<Prodotto> premioRiscattato = this.catalogoOpzionale.get().emettiPremio(premio);
+                int indicePremio = catalogoOpzionale.get().getListapremi().indexOf(premio);
+                int puntiDaScalare = catalogoOpzionale.get().getListapremi().get(indicePremio).getPuntiPremio();
                 this.decrementaPuntiCliente(cliente, puntiDaScalare);
-                return premio;
+                return premioRiscattato;
             } else throw new IllegalStateException("Nessun catalogo associato a questo programma.");
         }
         return Optional.empty();
@@ -155,5 +155,9 @@ public class ProgrammaPunti extends ProgrammaFedelta{
 
     public Optional<Catalogo> getCatalogoOpzionale() {
         return catalogoOpzionale;
+    }
+
+    public Map<Cliente, Integer> getClientiIscritti() {
+        return clientiIscritti;
     }
 }
