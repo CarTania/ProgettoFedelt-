@@ -5,24 +5,15 @@ import java.util.Objects;
 /**
  * Rappresenta un prodotto venduto da un'azienda.
  */
-public class Prodotto implements Cloneable {
+public class Prodotto {
     private final int idProdotto;
     private final String nome;
     private double prezzo;
-    private int quantita;
 
     public Prodotto(String nome, int idProdotto, double prezzo) {
         this.nome = nome;
         this.idProdotto = idProdotto;
         this.prezzo = prezzo;
-        this.quantita = 1;
-    }
-
-    public Prodotto(String nome, int idProdotto, double prezzo, int quantita) {
-        this.nome = nome;
-        this.idProdotto = idProdotto;
-        this.prezzo = prezzo;
-        this.quantita = quantita;
     }
 
     public String getNome() {
@@ -39,14 +30,6 @@ public class Prodotto implements Cloneable {
 
     public void setPrezzo(int prezzo) {
         this.prezzo = prezzo;
-    }
-
-    public int getQuantita() {
-        return quantita;
-    }
-
-    public void setQuantita(int quantita) {
-        this.quantita = quantita;
     }
 
     @Override
@@ -68,21 +51,6 @@ public class Prodotto implements Cloneable {
             "idProdotto=" + idProdotto +
             ", nome='" + nome + '\'' +
             ", prezzo=" + prezzo +
-            ", quantita=" + quantita +
             '}';
-    }
-
-    /**
-     * Ritorna un prodotto singolo (con quantità uguale a uno) decrementando opportunamente la
-     * quantità.
-     *
-     * @return il prodotto singolo.
-     * @throws CloneNotSupportedException
-     */
-    public Prodotto ottieniProdotto() throws CloneNotSupportedException {
-        Prodotto prodotto = (Prodotto) this.clone();
-        prodotto.setQuantita(1);
-        this.quantita--;
-        return prodotto;
     }
 }
