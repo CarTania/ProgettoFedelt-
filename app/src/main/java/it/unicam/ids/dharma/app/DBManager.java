@@ -2,7 +2,7 @@ package it.unicam.ids.dharma.app;
 
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 public class DBManager {
@@ -45,7 +45,8 @@ public class DBManager {
 
     public boolean inserisciProdotto(Prodotto prodotto, int quantita) {
         DBManager.getGestoreDb().connect();
-        String sql = "INSERT INTO prodotti VALUES (?, ?, ?, ?, null)";
+        String sql = "INSERT INTO prodotti VALUES (?, ?, ?, ?)";
+
         try {
             PreparedStatement preparedStatement = c.prepareStatement(sql);
             preparedStatement.setInt(1, prodotto.getIdProdotto());
@@ -53,32 +54,36 @@ public class DBManager {
             preparedStatement.setDouble(3, prodotto.getPrezzo());
             preparedStatement.setInt(4, quantita);
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ;
         return false;
     }
 
-    public Optional<Map.Entry<Prodotto, Integer>> recuperaProdotto(int idProdotto) {
+    /**
+     * Recupera un prodotto dal db usando l'id del prodotto.
+     *
+     * @param idProdotto l'id del prodotto.
+     * @return il prodotto cercato, se presente nel database.
+     */
+    public Optional<Prodotto> recuperaProdotto(int idProdotto) {
         DBManager.getGestoreDb().connect();
         String sql = "SELECT * FROM prodotti WHERE id_prodotto=?";
 
         try {
-            PreparedStatement preparedStatement = c.prepareStatement(sql);
-            preparedStatement.setInt(1, idProdotto);
-            ResultSet rs = preparedStatement.executeQuery();
-            int id = rs.getInt("id_prodotto");
-            int quantita = rs.getInt("quantita");
-            String nome = rs.getString("nome_prodotto");
-            double prezzo = rs.getDouble("prezzo");
-            Prodotto p = new Prodotto(nome, id, prezzo);
-            return Optional.of(Map.entry(p, quantita));
-
-        } catch (Exception e) {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, idProdotto);
+            ResultSet rs = p.executeQuery();
+            if(rs.next()){
+                int id = rs.getInt(1);
+                String nome = rs.getString(2);
+                double prezzo = rs.getDouble(3);
+                return Optional.of(new Prodotto(nome, id, prezzo));
+            }else
+                return Optional.empty();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return Optional.empty();
@@ -91,13 +96,28 @@ public class DBManager {
             PreparedStatement preparedStatement = c.prepareStatement(sql);
             preparedStatement.setInt(1, prodotto.getIdProdotto());
 
-            preparedStatement.executeQuery();
+            preparedStatement.executeUpdate();
             return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        ;
+        return false;
+    }
+
+    public boolean verificaPresenzaProdotto(int idProdotto){
+        DBManager.getGestoreDb().connect();
+        String sql = "SELECT * FROM prodotti WHERE id_prodotto=?";
+
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, idProdotto);
+            ResultSet rs = p.executeQuery();
+            if (rs.next())
+                return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return false;
     }
 
@@ -106,10 +126,10 @@ public class DBManager {
         String sql = "INSERT INTO clienti VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = c.prepareStatement(sql);
-            preparedStatement.setInt(1, cliente.id());
-            preparedStatement.setString(2, cliente.name());
-            preparedStatement.setInt(3, cliente.eta());
-            preparedStatement.setString(4, cliente.email());
+            preparedStatement.setInt(1, cliente.getId());
+            preparedStatement.setString(2, cliente.getName());
+            preparedStatement.setInt(3, cliente.getEta());
+            preparedStatement.setString(4, cliente.getEmail());
 
             preparedStatement.executeQuery();
             return true;
@@ -148,7 +168,7 @@ public class DBManager {
         String sql = "DELETE FROM clienti WHERE id_cliente=?";
         try {
             PreparedStatement preparedStatement = c.prepareStatement(sql);
-            preparedStatement.setInt(1, cliente.id());
+            preparedStatement.setInt(1, cliente.getId());
 
             preparedStatement.executeQuery();
             return true;
@@ -159,16 +179,32 @@ public class DBManager {
         return false;
     }
 
+    public boolean verificaPresenzaCliente(int idCliente){
+        DBManager.getGestoreDb().connect();
+        String sql = "SELECT * FROM clienti WHERE id_cliente=?";
+
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, idCliente);
+            ResultSet rs = p.executeQuery();
+            if (rs.next())
+                return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
     public boolean inserisciTitolare(Titolare titolare) {
         DBManager.getGestoreDb().connect();
         String sql = "INSERT INTO titolari VALUES (?, ?, ?, ?, ?)";
         try {
             PreparedStatement preparedStatement = c.prepareStatement(sql);
-            preparedStatement.setInt(1, titolare.id());
-            preparedStatement.setInt(2, titolare.partitaIva());
-            preparedStatement.setString(3, titolare.nome());
-            preparedStatement.setString(4, titolare.email());
-            preparedStatement.setString(4, titolare.azienda());
+            preparedStatement.setInt(1, titolare.getId());
+            preparedStatement.setInt(2, titolare.getPartitaIva());
+            preparedStatement.setString(3, titolare.getNome());
+            preparedStatement.setString(4, titolare.getEmail());
+            preparedStatement.setString(4, titolare.getAzienda());
 
             preparedStatement.executeQuery();
             return true;
@@ -207,13 +243,29 @@ public class DBManager {
         String sql = "DELETE FROM titolari WHERE id_titolare=?";
         try {
             PreparedStatement preparedStatement = c.prepareStatement(sql);
-            preparedStatement.setInt(1, titolare.id());
+            preparedStatement.setInt(1, titolare.getId());
 
             preparedStatement.executeQuery();
             return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean verificaPresenzaTitolare(int idTitolare){
+        DBManager.getGestoreDb().connect();
+        String sql = "SELECT * FROM titolari WHERE id_titolare=?";
+
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, idTitolare);
+            ResultSet rs = p.executeQuery();
+            if (rs.next())
+                return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return false;
     }
@@ -233,7 +285,7 @@ public class DBManager {
                 preparedStatement1.setInt(3, idCatalogo);
 
                 PreparedStatement preparedStatement2 = c.prepareStatement(sql2);
-                preparedStatement2.setInt(1, t.id());
+                preparedStatement2.setInt(1, t.getId());
                 preparedStatement2.setInt(2, p.getId());
 
                 LocalDate d = p.dataAttivazione;
@@ -257,7 +309,7 @@ public class DBManager {
                 preparedStatement1.setNull(3, Types.INTEGER);
 
                 PreparedStatement preparedStatement2 = c.prepareStatement(sql2);
-                preparedStatement2.setInt(1, t.id());
+                preparedStatement2.setInt(1, t.getId());
                 preparedStatement2.setInt(2, p.getId());
 
                 LocalDate d = p.dataAttivazione;
@@ -277,26 +329,65 @@ public class DBManager {
         return false;
     }
 
-    public Optional<ProgrammaFedelta> ottieniProgrammaFedelta(ProgrammaFedelta p){
+    public boolean verificaPresenzaProgramma(int idProgramma){
         DBManager.getGestoreDb().connect();
-        String sql1 = "SELECT * FROM programmi_punti WHERE id_programma=?";
-        String sql2 = "SELECT * FROM programmi_livelli WHERE id_programma=?";
+        String sql = "SELECT * FROM programmi_fedelta WHERE id_programma=?";
 
-        if(p instanceof ProgrammaPunti){
+        try {
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setInt(1, idProgramma);
+            ResultSet rs = p.executeQuery();
+            if (rs.next())
+                return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    //TODO
+    public void attivaProgrammaPunti(ProgrammaPunti p, Cliente cliente){
+        DBManager.getGestoreDb().connect();
+
+        if (verificaPresenzaProgramma(p.getId())){
+            String sql = "INSERT INTO adesioni_clienti_programmapunti VALUES (?, ?, ?)";
             try {
-                PreparedStatement preparedStatement = c.prepareStatement(sql1);
-                ResultSet rs = preparedStatement.executeQuery();
-                if(!rs.next())
-                    return Optional.empty();
+                PreparedStatement prep = c.prepareStatement(sql);
+                prep.setInt(1, cliente.getId());
+                prep.setInt(2, p.getId());
+                prep.setInt(3, 0);
+                prep.executeUpdate();
 
-
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
+    }
+
+    public Optional<ProgrammaFedelta> ottieniProgrammaFedelta(int idProgramma){
         return Optional.empty();
     }
 
+    //TODO
+    List<ProgrammaFedelta> ottieniProgrammiCliente(int idCliente){
+        return null;
+    }
 
+    //TODO
+    List<Acquisto> ottieniAcquistiCliente(int idCliente){
+        return null;
+    }
 
+    //TODO
+    List<ProgrammaFedelta> ottieniProgrammiAzienda(String nomeAzienda){
+        return null;
+    }
+
+    //TODO
+    List<ProgrammaFedelta> ottieniProgrammiTipologia(String tipologia){
+        return null;
+    }
+    //TODO
+    public void attivaProgrammaLivelli(ProgrammaLivelli p, Cliente cliente) {
+    }
 }
