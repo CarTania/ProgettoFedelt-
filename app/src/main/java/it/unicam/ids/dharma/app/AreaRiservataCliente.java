@@ -2,9 +2,7 @@ package it.unicam.ids.dharma.app;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Predicate;
 
-import static it.unicam.ids.dharma.app.GestoreProgrammiFedelta.getGestoreProgrammi;
 
 /**
  * La classe rappresenta l'area riservata di un cliente: tramite questa il cliente effettua le
@@ -26,18 +24,25 @@ public class AreaRiservataCliente implements ICliente {
     @Override
     public void cercaProgrammaFedelta() {
         Scanner s = new Scanner(System.in);
-
+        boolean ricercaInCorso = true;
         this.apriMenuRicerca();
-        String userChoice = s.nextLine();
-        if (userChoice.equals("1")) {
-            System.out.println("Inserisci la tipologia del programma: ");
-            this.cercaPerTipologia(s.nextLine());
 
-        } else if (userChoice.equals("2")) {
-            System.out.println("Inserisci il nome dell'azienda: ");
-            this.cercaPerAzienda(s.nextLine());
-        } else
-            throw new IllegalArgumentException("Inserito nome/tipologia non valido");
+        while (ricercaInCorso) {
+            String userChoice = s.nextLine();
+            if (userChoice.equals("1")) {
+                System.out.println("Inserisci la tipologia del programma: ");
+                this.cercaPerTipologia(s.nextLine());
+                ricercaInCorso = false;
+
+            } else if (userChoice.equals("2")) {
+                System.out.println("Inserisci il nome dell'azienda: ");
+                this.cercaPerAzienda(s.nextLine());
+                ricercaInCorso = false;
+            }
+            System.out.println("Reinserire modalità ricerca.");
+        }
+
+
     }
 
     /**
@@ -47,102 +52,35 @@ public class AreaRiservataCliente implements ICliente {
     public void apriMenuRicerca() {
         String[] vociMenu = {"1. Ricerca per tipologia", "2. Ricerca per azienda"};
 
-        for (int i = 0; i < vociMenu.length; i++)
-            System.out.println(vociMenu[i]);
-    }
-
-    /**
-     * Il metodo legge la scelta in input del cliente e la ritorna.
-     *
-     * @return la scelta effettuata dal cliente.
-     */
-    public String leggiInput() {
-        String input;
-        System.out.println("Scelta => ");
-        Scanner scanner = new Scanner(System.in);
-        input = scanner.nextLine();
-        return input;
+        for (String menu : vociMenu) System.out.println(menu);
     }
 
 
     @Override
     public void cercaPerAzienda(String nomeAzienda) {
-        //predicato che verifica l'uguaglianza con la stringa passata dall'utente.
-        Predicate<String> matchNomeAzienda = n -> (n.equals(nomeAzienda));
-        //il gestore dei programmi ritorna la lista dei programmi attivati da una determinata azienda.
-        Optional<List<ElementoDB>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchNomeAzienda);
+        List<ProgrammaFedelta> programmiAzienda =
+            GestoreDB.ottieniProgrammiAzienda(nomeAzienda);
+        if(!programmiAzienda.isEmpty())
+            for (ProgrammaFedelta p:
+                 programmiAzienda) {
+                System.out.println(p);
+            }
     }
 
-    /**
-     * Questo metodo permette di selezionare un programma tra quelli attivabili da un cliente.
-     *
-     * @param idProgramma è un intero che rappresenta l'id del programma fedeltà.
-     */
-    @Override
-    public Optional<ElementoDB> selezionaProgramma(int idProgramma) {
-
-        Predicate<Integer> p = i -> i == idProgramma;
-        if(GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p).isPresent()) {
-            return GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
-        }
-        return Optional.empty();
-    }
 
     @Override
     public void cercaPerTipologia(String tipologia) {
-        Predicate<String> matchTipologia = n -> (n.equals(tipologia));
-        //il gestore dei programmi ritorna la lista dei programmi attivati di una determinata tipologia.
-        Optional<List<ElementoDB>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchTipologia);
-    }
+        List<ProgrammaFedelta> programmiTipologia = GestoreDB.ottieniProgrammiTipologia(tipologia);
+        assert programmiTipologia != null;
+        if (!programmiTipologia.isEmpty())
+            for (ProgrammaFedelta p:
+                 programmiTipologia) {
+                System.out.println(p);
 
-
-    /**
-     * Questo metodo permette di selezionare un programma in base alla tipologia tra quelli attivabili da un cliente.
-     *
-     * @param tipologia è una stringa che rappresenta la tipologia.
-     */
-    @Override
-    public void selezionaTipologiaProgramma(String tipologia) {
-        Predicate<String> p = t -> t.equals(tipologia);
-        Optional<ElementoDB> programmaSelezionato = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
-    }
-
-    /**
-     * Questo metodo permette di visualizzare i programmi attivati dall'azienda.
-     *
-     * @param nomeAzienda è una stringa che rappresenta il nome dell'azienda.
-     */
-
-    @Override
-    public void mostraElencoProgrammiAzienda(String nomeAzienda) {
-        Predicate<String> p = t -> t.equals(nomeAzienda);
-        Optional<List<ElementoDB>> elencoProgrammi = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
-        if (elencoProgrammi.isPresent()) {
-            for (ElementoDB programma : elencoProgrammi.get()) {
-                System.out.println(programma);
             }
-        }
-    }
-
-    @Override
-    public void mostraDettagliProgramma(int idProgramma) {
-
-        Optional<ElementoDB> programma = this.selezionaProgramma(idProgramma);
-        programma.ifPresent(System.out::println);
     }
 
 
-    @Override
-    public void mostraElencoProgrammiPerTipologia(String tipologia) {
-        Predicate<String> p = t -> t.equals(tipologia);
-        Optional<List<ElementoDB>> elencoProgrammi = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
-        if (elencoProgrammi.isPresent()) {
-            for (ElementoDB programma : elencoProgrammi.get()) {
-                System.out.println(programma);
-            }
-        }
-
-    }
 
     /**
      * Il metodo permette di effettuare un acquisto dal magazzino online.
@@ -176,24 +114,23 @@ public class AreaRiservataCliente implements ICliente {
     }
 
     /**
-     * @param idProgramma
+     * Visualizza il catalogo a premi del programma a punti attivato dal cliente (se ha attivato un
+     * programma a punti). Se il cliente non ha attivato nessun programma a punti, viene lanciata
+     * una <code>IllegalArgumentException</code>.
      */
-
     @Override
-    public void visualizzaCatalogoPremi(int idProgramma) {
+    public void visualizzaCatalogoPremi() {
         for (ProgrammaFedelta p : programmiAttivati) {
-            if (p.getId() == idProgramma) {
                 if (p instanceof ProgrammaPunti programmaPunti) {
                     if (programmaPunti.getCatalogoOpzionale().isPresent()) {
                         programmaPunti.getCatalogoOpzionale().get().getListapremi()
                             .forEach(System.out::println);
                     }
+                    return;
                 }
             }
-        }
-
+        throw new IllegalArgumentException("Nessun programma a punti attivato.");
     }
-
 
     /**
      * Il metodo ha l'obiettivo di permettere al cliente di riscattare il vantaggio dal programma punti:
@@ -246,9 +183,9 @@ public class AreaRiservataCliente implements ICliente {
         }
     }
 
-    /** Questo metodo permette di riscattare un premio.
+    /** Questo metodo permette di riscattare un premio da un programma a punti attivato.
      * @param p rappresenta il premio.
-     * @param programmaPunti
+     * @param programmaPunti il programma a punti attivato.
      */
 
     @Override
@@ -266,5 +203,53 @@ public class AreaRiservataCliente implements ICliente {
     public void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti) {
         Coupon coupon = programmaPunti.generaCoupon(this.cliente, punti, programmaPunti.getDataScadenza());
         this.vantaggiRiscattati.add(coupon);
+    }
+
+    @Override
+    public void attivaProgrammaPunti() {
+        Scanner s = new Scanner(System.in);
+        String input;
+        boolean inserimentoInCorso = true;
+        this.cercaProgrammaFedelta();
+        System.out.println("Inserisci l'id del programma da attivare: ");
+
+        while (inserimentoInCorso) {
+            input = s.nextLine();
+            Optional<ProgrammaFedelta> programmaSelezionato =
+                GestoreDB.ottieniProgrammaFedelta(Integer.parseInt(input));
+
+            if (programmaSelezionato.isPresent()) {
+                if (programmaSelezionato.get() instanceof ProgrammaPunti p) {
+                    GestoreDB.attivaProgrammaPunti(p, this.cliente);
+                    this.programmiAttivati.add(p);
+                    inserimentoInCorso = false;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void iniziaSessione() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Area riservata di "+ this.cliente.getName()+". Premere ! per terminare"+
+            " la sessione.");
+        String input = "";
+        while(!input.equals("!")){
+            System.out.println("Scegli l'operazione da effettuare:\n1.Attiva un programma a punti\n"+
+                "2. Cerca programma fedeltà");
+            input = s.nextLine();
+            if(input.equals("1"))
+                this.cercaProgrammaFedelta();
+            else if (input.equals("2")) {
+                this.attivaProgrammaPunti();
+            }
+        }
+    }
+
+    public void visualizzaVantaggiRiscattati(){
+        for (VantaggioFedelta v:
+             vantaggiRiscattati) {
+            System.out.println(v);
+        }
     }
 }

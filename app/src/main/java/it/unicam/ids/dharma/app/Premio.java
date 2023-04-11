@@ -1,15 +1,31 @@
 package it.unicam.ids.dharma.app;
 
+import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 /**
  * Rappresenta un premio che è possibile inserire in un catalogo premi.
  */
-public class Premio implements VantaggioFedelta {
+
+@Entity
+@Table(name = "premi")
+public class Premio implements VantaggioFedelta,ElementoDB{
+    @OneToOne
+    @JoinColumn(name = "id_premio", referencedColumnName = "id")
+    @EmbeddedId
     private Prodotto premio;
+
+    @Column(name = "quantita")
     private int quantitaPremio;
+
+    @Column(name = "punti")
     private int puntiPremio;
+
+    public Premio() {
+    }
 
     /**
      * Crea un premio da un prodotto presente nel magazzino, se è possibile farlo.
@@ -19,19 +35,12 @@ public class Premio implements VantaggioFedelta {
      * @param puntiPremio    i punti associati a quel premio.
      */
     public Premio(Prodotto prodotto, int quantitaPremio, int puntiPremio) {
-        Map<Prodotto, Integer> prodottiMagazzino = Magazzino.getMagazzino().getProdottiDisponibili();
-        if (prodottiMagazzino.containsKey(prodotto)) {
-            if (prodottiMagazzino.get(prodotto) >= quantitaPremio) {
-                this.premio = prodotto;
-                this.quantitaPremio = quantitaPremio;
-                Magazzino.getMagazzino().decrementaQuantita(prodotto, quantitaPremio);
-                this.puntiPremio = puntiPremio;
-            }else
-                throw new IllegalArgumentException("Quantità non sufficiente per il premio" +
-                    " da creare");
-        } else
-            throw new IllegalArgumentException("Prodotto non presente in magazzino.");
+            this.premio = prodotto;
+            this.quantitaPremio = quantitaPremio;
+            Magazzino.getMagazzino().decrementaQuantita(prodotto, quantitaPremio);
+            this.puntiPremio = puntiPremio;
     }
+    
 
     public Prodotto getPremio() {
         return premio;
@@ -64,9 +73,11 @@ public class Premio implements VantaggioFedelta {
      * @return true se la quantità viene aggiornata, false altrimenti.
      */
     public boolean aumentaQuantitaPremio(int quantitaDaAggiungere) {
-        if (Magazzino.getMagazzino().getProdottiDisponibili().get(this.premio) >= quantitaPremio) {
-            this.quantitaPremio += quantitaDaAggiungere;
+        int indice = Magazzino.getMagazzino().getProdottiDisponibili().indexOf(this.premio);
+        if (Magazzino.getMagazzino().getProdottiDisponibili().get(indice).getQuantita() >= quantitaDaAggiungere) {
+            GestoreDB.aumentaQuantitaPremio(this, quantitaDaAggiungere);
             Magazzino.getMagazzino().decrementaQuantita(this.premio, quantitaDaAggiungere);
+            this.quantitaPremio += quantitaDaAggiungere;
             return true;
         }
         return false;
@@ -80,8 +91,9 @@ public class Premio implements VantaggioFedelta {
      */
     public boolean decrementaQuantitaPremio(int quantitaDaDecrementare) {
         if ((this.quantitaPremio - quantitaDaDecrementare) >= 0) {
-            this.quantitaPremio -= quantitaDaDecrementare;
+            GestoreDB.decrementaQuantitaPremio(this, quantitaDaDecrementare);
             Magazzino.getMagazzino().aumentaQuantita(this.premio, quantitaDaDecrementare);
+            this.quantitaPremio -= quantitaDaDecrementare;
             return true;
         }
         return false;

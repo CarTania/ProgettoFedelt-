@@ -9,13 +9,14 @@ import java.util.Map;
  * @param <T> la tipologia del vantaggio associato al livello.
  */
 public class Livello<T extends VantaggioFedelta> implements Comparable<Livello<T>> {
-
+    private final int id;
     private final int numeroLivello;
     private final Map<Cliente, Double> clientiLivello;
     private final T vantaggioLivello;
     private final double soglia;
 
     public Livello(int numeroLivello, T vantaggioLivello) {
+        this.id = IdGenerator.getGeneratoreId().riceviIdValido();
         this.numeroLivello = numeroLivello;
         this.clientiLivello = new HashMap<>();
         this.vantaggioLivello = vantaggioLivello;
@@ -75,5 +76,9 @@ public class Livello<T extends VantaggioFedelta> implements Comparable<Livello<T
             return 1;
         }
         return 0;
+    }
+
+    public int getId() {
+        return id;
     }
 }
