@@ -22,13 +22,20 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param costanteCambio la costante di cambio, decisa dal titolare, per convertire i punti in euro (e viceversa).
      * @param catalogo       il catalogo da associare al programma a punti.
      */
-    public ProgrammaPunti(int id, LocalDate dataScadenza, double costanteCambio, Catalogo catalogo) {
-        super(id, LocalDate.now(), dataScadenza);
+    public ProgrammaPunti(LocalDate dataScadenza, double costanteCambio, Catalogo catalogo) {
+        super(IdGenerator.getGeneratoreId().riceviIdValido(), LocalDate.now(), dataScadenza);
         if (costanteCambio <= 0)
             throw new IllegalArgumentException("La costante di cambio deve essere positiva.");
         this.clientiIscritti = new HashMap<>();
         this.costanteCambio = costanteCambio;
         this.catalogoOpzionale = Optional.of(catalogo);
+    }
+
+    public ProgrammaPunti(int id, LocalDate dataAttivazione, LocalDate dataScadenza, Map<Cliente, Integer> clientiIscritti, double costanteCambio, Optional<Catalogo> catalogoOpzionale) {
+        super(id, dataAttivazione, dataScadenza);
+        this.clientiIscritti = clientiIscritti;
+        this.costanteCambio = costanteCambio;
+        this.catalogoOpzionale = catalogoOpzionale;
     }
 
     /**
@@ -37,8 +44,8 @@ public class ProgrammaPunti extends ProgrammaFedelta{
      * @param dataScadenza   la data di scadenza del programma.
      * @param costanteCambio la costante di cambio, decisa dal titolare, per convertire i punti in euro (e viceversa).
      */
-    public ProgrammaPunti(int id, LocalDate dataScadenza, double costanteCambio) {
-        super(id, LocalDate.now(), dataScadenza);
+    public ProgrammaPunti(LocalDate dataScadenza, double costanteCambio) {
+        super(IdGenerator.getGeneratoreId().riceviIdValido(), LocalDate.now(), dataScadenza);
         if (costanteCambio <= 0)
             throw new IllegalArgumentException("La costante di cambio deve essere positiva.");
         this.clientiIscritti = new HashMap<>();
@@ -158,5 +165,9 @@ public class ProgrammaPunti extends ProgrammaFedelta{
 
     public Map<Cliente, Integer> getClientiIscritti() {
         return clientiIscritti;
+    }
+
+    public double getCostanteCambio() {
+        return costanteCambio;
     }
 }
