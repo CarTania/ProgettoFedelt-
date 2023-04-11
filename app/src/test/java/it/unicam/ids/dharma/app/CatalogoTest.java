@@ -1,9 +1,5 @@
 package it.unicam.ids.dharma.app;
 
-import it.unicam.ids.dharma.app.Catalogo;
-import it.unicam.ids.dharma.app.Magazzino;
-import it.unicam.ids.dharma.app.Premio;
-import it.unicam.ids.dharma.app.Prodotto;
 import org.junit.jupiter.api.*;
 
 import java.util.Optional;
@@ -20,9 +16,11 @@ public class CatalogoTest {
     @Order(1)
     public void inserisciPremioTest (){
         Magazzino m = Magazzino.getMagazzino();
-        Catalogo c = new Catalogo(1);
+        Catalogo c = new Catalogo();
         Prodotto prodotto1 = m.aggiungiProdotto("scarpe", 30, 4);
-        assertEquals(4, m.getProdottiDisponibili().get(prodotto1));
+        int indiceProdotto = m.getProdottiDisponibili().indexOf(prodotto1);
+
+        assertEquals(4, m.getProdottiDisponibili().get(indiceProdotto).getQuantita());
         Premio premio = new Premio(prodotto1, 4, 10);
         c.inserisciPremio(premio);
         assertTrue(c.getListapremi().contains(premio));
@@ -39,7 +37,7 @@ public class CatalogoTest {
     public void rimuoviPremioTest()
     {
         Magazzino m = Magazzino.getMagazzino();
-        Catalogo c = new Catalogo(1);
+        Catalogo c = new Catalogo();
         Prodotto prodotto3 = m.aggiungiProdotto("zaino", 30, 4);
         Premio premio = new Premio(prodotto3, 4, 10);
         c.inserisciPremio(premio);
@@ -52,7 +50,7 @@ public class CatalogoTest {
     public void aggiornaPuntiPremioTest()
     {
         Magazzino m = Magazzino.getMagazzino();
-        Catalogo c = new Catalogo(1);
+        Catalogo c = new Catalogo();
         Prodotto prodotto4 = m.aggiungiProdotto("orologio", 30, 4);
         Premio premio = new Premio(prodotto4, 4, 10);
         c.inserisciPremio(premio);
@@ -65,7 +63,7 @@ public class CatalogoTest {
     @Order(4)
     public void aggiornaQuantitaPremioTest() {
         Magazzino m = Magazzino.getMagazzino();
-        Catalogo c = new Catalogo(1);
+        Catalogo c = new Catalogo();
         Prodotto prodotto5 = m.aggiungiProdotto("cappotto", 30, 4);
         Premio premio = new Premio(prodotto5, 4, 10);
         c.inserisciPremio(premio);
@@ -79,16 +77,16 @@ public class CatalogoTest {
         assertTrue(c.aggiornaQuantitaPremio(premio2, 15));
 
         int indicePremio = c.getListapremi().indexOf(premio2);
-
+        int indiceProdotto = m.getProdottiDisponibili().indexOf(prodotto6);
         assertEquals(c.getListapremi().get(indicePremio).getQuantitaPremio(), 15);
-        assertEquals(Magazzino.getMagazzino().getProdottiDisponibili().get(prodotto6), 5);
+        assertEquals(Magazzino.getMagazzino().getProdottiDisponibili().get(indiceProdotto).getQuantita(), 5);
     }
 
     @Test
     @Order(5)
     public void emettiPremioTest() throws CloneNotSupportedException {
         Magazzino m = Magazzino.getMagazzino();
-        Catalogo c = new Catalogo(1);
+        Catalogo c = new Catalogo();
         Prodotto prodotto7 = m.aggiungiProdotto("scarpe", 30, 4);
         Premio premio = new Premio(prodotto7, 4, 10);
         c.inserisciPremio(premio);

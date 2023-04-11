@@ -1,6 +1,5 @@
-package it.unicam.ids.dharma.test;
+package it.unicam.ids.dharma.app;
 
-import it.unicam.ids.dharma.app.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -29,7 +28,7 @@ public class LivelloTest {
         assertFalse(livelloStandard.aumentaPercentuale(cliente, acquisto));
         livelloStandard.aggiungiCliente(cliente, 40);
         assertTrue(livelloStandard.aumentaPercentuale(cliente, acquisto));
-        Prodotto prodotto = new Prodotto("astuccio", 60, 5);
+        Prodotto prodotto = new Prodotto("astuccio", 60.0, 5);
         acquisto.aggiungiProdotto(prodotto);
         livelloStandard.aumentaPercentuale(cliente, acquisto);
         assertEquals(livelloStandard.getClientiLivello().get(cliente), 40 + acquisto.totaleAcquisto() * 0.1);
