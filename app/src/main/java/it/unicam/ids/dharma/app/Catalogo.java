@@ -11,8 +11,8 @@ public class Catalogo {
     private final int id;
     private final List<Premio> listapremi;
 
-    public Catalogo(int id) {
-        this.id = id;
+    public Catalogo() {
+        this.id = IdGenerator.getGeneratoreId().riceviIdValido();
         this.listapremi = new ArrayList<>();
     }
 
@@ -32,6 +32,7 @@ public class Catalogo {
      */
     public boolean inserisciPremio(Premio premio) {
         if (!(listapremi.contains(premio))) {
+            GestoreDB.inserisciPremio(premio);
             listapremi.add(premio);
             return true;
         }
@@ -88,7 +89,8 @@ public class Catalogo {
 
             if (listapremi.get(indicePremio).getQuantitaPremio() < quantita) {
                 int aumento = quantita - listapremi.get(indicePremio).getQuantitaPremio();
-                if(Magazzino.getMagazzino().getProdottiDisponibili().get(premio.getPremio()) >= aumento){
+                int indice = Magazzino.getMagazzino().getProdottiDisponibili().indexOf(premio.getPremio());
+                if(Magazzino.getMagazzino().getProdottiDisponibili().get(indice).getQuantita() >= aumento){
                     listapremi.get(indicePremio).aumentaQuantitaPremio(aumento);
                     return true;
                 }else
