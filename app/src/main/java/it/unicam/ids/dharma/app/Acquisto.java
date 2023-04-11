@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * La classe rappresenta un acquisto effettuato da un cliente. E' composto da una lista di prodotti
+ * La classe rappresenta un acquisto effettuato da un cliente. Un acquisto è composto da una lista di prodotti
  * acquistati in una data specifica.
  */
 public class Acquisto implements ElementoDB {
