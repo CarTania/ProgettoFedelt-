@@ -1,19 +1,17 @@
 package it.unicam.ids.dharma.app;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.Period;
 
 /**
  * La classe astratta rappresenta un generico programma fedeltà.
  */
-public class ProgrammaFedelta {
-
-    private final int id;
-
-    private final LocalDate dataAttivazione;
-    private final LocalDate dataScadenza;
-
-    private boolean attivo;
+public class ProgrammaFedelta implements ElementoDB {
+    protected final int id;
+    protected final LocalDate dataAttivazione;
+    protected final LocalDate dataScadenza;
+    protected boolean attivo;
 
     public ProgrammaFedelta(int id, LocalDate dataAttivazione, LocalDate dataScadenza) {
         this.id = id;
