@@ -1,35 +1,59 @@
 package it.unicam.ids.dharma.app;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
 /**
  * Rappresenta un prodotto venduto da un'azienda.
  */
-public class Prodotto {
-    private final int idProdotto;
-    private final String nome;
+@Entity
+@Embeddable
+@Table(name = "prodotti")
+public class Prodotto implements  ElementoDB {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String nome;
     private double prezzo;
+    private int quantita;
 
-    public Prodotto(String nome, int idProdotto, double prezzo) {
+    public Prodotto() {
+
+    }
+
+    public Prodotto(String nome, double prezzo, int quantita) {
         this.nome = nome;
-        this.idProdotto = idProdotto;
         this.prezzo = prezzo;
+        this.quantita = quantita;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public int getIdProdotto() {
-        return idProdotto;
-    }
-
     public double getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(int prezzo) {
+    public int getQuantita() {
+        return quantita;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setPrezzo(double prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
     }
 
     @Override
@@ -37,20 +61,21 @@ public class Prodotto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Prodotto prodotto = (Prodotto) o;
-        return idProdotto == prodotto.idProdotto;
+        return id == prodotto.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idProdotto);
+        return Objects.hash(id);
     }
 
     @Override
     public String toString() {
-        return "Prodotto{" +
-            "idProdotto=" + idProdotto +
+        return "EntitaProdotto{" +
+            "id=" + id +
             ", nome='" + nome + '\'' +
             ", prezzo=" + prezzo +
+            ", quantita=" + quantita +
             '}';
     }
 }
