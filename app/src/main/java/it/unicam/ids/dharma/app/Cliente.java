@@ -1,20 +1,70 @@
 package it.unicam.ids.dharma.app;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 import java.util.Objects;
 
 /**
  * Rappresenta un cliente iscritto alla piattaforma.
  */
-public record Cliente(int id, String name, int eta, String email) {
+@Entity
+@Table(name = "clienti")
+public class Cliente implements  ElementoDB{
+    @Id
+    @Column(name = "id_cliente", nullable = false)
+    private final Integer id;
+    @Column(name = "nome_cliente")
+    private final String name;
+    @Column(name = "eta")
+    private final Integer eta;
+    @Column(name = "email_cliente")
+    private final String email;
 
-    //"id" verrà generato in qualche metodo.
+    public Cliente(){
+        id = null;
+        name = null;
+        eta = null;
+        email = null;
+    }
+    public Cliente(String name, int eta, String email) {
+        this.id = IdGenerator.getGeneratoreId().riceviIdValido();
+        this.name = name;
+        this.eta = eta;
+        this.email = email;
+    }
+
+    public Cliente(int id, String name, int eta, String email) {
+        this.id = id;
+        this.name = name;
+        this.eta = eta;
+        this.email = email;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getEta() {
+        return eta;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cliente cliente = (Cliente) o;
-        return id == cliente.id;
+        return id.equals(cliente.id);
     }
 
     @Override
