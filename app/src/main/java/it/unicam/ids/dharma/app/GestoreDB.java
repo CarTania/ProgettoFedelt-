@@ -171,48 +171,24 @@ public class GestoreDB {
         s.close();
     }
 
-
-    public static List<Prodotto> ottieniPremiCatalogo(Catalogo catalogo){
-        Session s = GestoreDB.getSessionFactory().openSession();
-
-        int id = catalogo.getId();
-
-        Integer idPremio = s.createQuery("select idPremio from EntitaPremio where catalogo = :id", Integer.class)
-            .setParameter("id", id)
-            .getSingleResult();
-
-        List<Prodotto> prodotti = s.createQuery("select p from Prodotto p where p.idProdotto = :id", Prodotto.class)
-            .setParameter("id", idPremio)
-            .getResultList();
-
-
-        s.close();
-        return prodotti;
-    }
-    //TODO
     public static List<ProgrammaFedelta> ottieniProgrammiAzienda(String nomeAzienda){
         return Collections.emptyList();
     }
 
-    //TODO
     public static List<ProgrammaFedelta> ottieniProgrammiTipologia(String tipologia){
         return Collections.emptyList();
     }
 
-    //TODO
     public static Optional<ProgrammaFedelta> ottieniProgrammaFedelta(int id){
         return null;
     }
 
-    //TODO
     public static void attivaProgrammaPunti(ProgrammaPunti p, Cliente c){
 
     }
-
     public static void registraListaProdotti(){
 
     }
-
     public static boolean verificaPresenzaCliente(int idCliente) {
         return false;
     }
