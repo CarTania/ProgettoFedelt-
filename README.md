@@ -5,11 +5,12 @@
 L’intento di questa piattaforma è quella di aiutare tutte le attività ad incrementare il tasso di fidelizzazione, per mantenere l’attuale clientela e acquisirne di nuova.
 
 <h3>Gli obiettivi principali sono:</h3>
-> - Aumentare il fatturato
-> - Mantenere la clientela
-> - Ottenere nuova clientela
+> - Aumentare il fatturato<br>
+> - Mantenere la clientela<br>
+> - Ottenere nuova clientela<br>
 
 <h3>I soggetti all’interno del progetto sono:</h3>
+
 **Cliente**: Si iscrive/disiscrive alla piattaforma del programma fedeltà per poi aderire a uno o più programmi attivi e tramite un’area riservata può visualizzare lo storico acquisti, scrivere delle recensioni, fare nuovi acquisti e riscattare i vari premi e promozioni.
 
 **Titolare**: Può creare uno o più programmi fedeltà (programma a punti, programma a livelli, servizi premium, ecc.), quindi associa al programma un catalogo che crea/modifica/elimina. Inoltre può visualizzare le statistiche dei vari programmi attivi.
@@ -60,8 +61,8 @@ Il risultato raggiunto rappresenta l’architettura eseguibile del sistema (sepp
 
 ## Autori
 
-Antonio Addesa
-Tania Cartechini
-Luca Malvatani
+Antonio Addesa<br>
+Tania Cartechini<br>
+Luca Malvatani<br>
 
 
