@@ -1,6 +1,5 @@
 package it.unicam.ids.dharma.app;
 
-import it.unicam.ids.dharma.app.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -23,7 +22,7 @@ public class ProgrammaLivelliTest {
         );
 
         ProgrammaLivelli<Coupon> p = new ProgrammaLivelli<>(
-           1243 ,3, vantaggi, LocalDate.of(2023, 12, 31)
+            3, vantaggi, LocalDate.of(2023, 12, 31)
         );
         //controllo della correttezza del numero dei livelli e dell'assegnamento
         for (int i = 0; i < p.getLivelliProgramma().size(); i++) {
@@ -38,12 +37,13 @@ public class ProgrammaLivelliTest {
 
         assertThrows(
             IllegalArgumentException.class, () -> new ProgrammaLivelli<>(
-                154,3, vantaggi2, LocalDate.of(2023, 12, 31)
+                3, vantaggi2, LocalDate.of(2023, 12, 31)
             )
         );
     }
+
     @Test
-    public void totaleClientiTest(){
+    public void totaleClientiTest() {
         Cliente c1 = new Cliente(1, "Roberto", 40, "roberto@gmail.com");
         Cliente c2 = new Cliente(1, "Sara", 32, "sara@gmail.com");
         Cliente c3 = new Cliente(1, "Alessandro", 50, "alessandro@gmail.com");
@@ -55,7 +55,7 @@ public class ProgrammaLivelliTest {
         );
 
         ProgrammaLivelli<Coupon> p = new ProgrammaLivelli<>(
-            152,3, vantaggi, LocalDate.of(2023, 12, 31)
+            3, vantaggi, LocalDate.of(2023, 12, 31)
         );
 
         p.getLivelliProgramma().get(0).aggiungiCliente(c1, 0.0);
@@ -64,8 +64,9 @@ public class ProgrammaLivelliTest {
 
         assertEquals(p.totaleClienti(), 3);
     }
+
     @Test
-    public void aggiornaLivelloTest(){
+    public void aggiornaLivelloTest() {
         Magazzino m = Magazzino.getMagazzino();
         Cliente c1 = new Cliente(1, "Roberto", 40, "roberto@gmail.com");
         Cliente c2 = new Cliente(1, "Sara", 32, "sara@gmail.com");
@@ -78,7 +79,7 @@ public class ProgrammaLivelliTest {
         );
 
         ProgrammaLivelli<Coupon> p = new ProgrammaLivelli<>(
-           235, 3, vantaggi, LocalDate.of(2023, 12, 31)
+            3, vantaggi, LocalDate.of(2023, 12, 31)
         );
 
         p.getLivelliProgramma().get(0).aggiungiCliente(c1, 0.0);
@@ -98,10 +99,4 @@ public class ProgrammaLivelliTest {
         assertTrue(p.getLivelliProgramma().get(2).getClientiLivello().containsKey(c3));
         assertEquals(p.getLivelliProgramma().get(2).getClientiLivello().get(c3), 100);
     }
-
-
-
-
-
-
 }
