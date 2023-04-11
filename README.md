@@ -5,9 +5,9 @@
 L’intento di questa piattaforma è quella di aiutare tutte le attività ad incrementare il tasso di fidelizzazione, per mantenere l’attuale clientela e acquisirne di nuova.
 
 <h3>Gli obiettivi principali sono:</h3>
-> - Aumentare il fatturato<br>
-> - Mantenere la clientela<br>
-> - Ottenere nuova clientela<br>
+ - Aumentare il fatturato<br>
+ - Mantenere la clientela<br>
+ - Ottenere nuova clientela<br>
 
 <h3>I soggetti all’interno del progetto sono:</h3>
 
@@ -23,7 +23,7 @@ L’intento di questa piattaforma è quella di aiutare tutte le attività ad inc
 
 **Tempo**: verifica le date di scadenza dei programmi creati dal titolare
 
-## Fasi di sviluppo del progetto 
+## Fasi di sviluppo del progetto 
 
 Per sviluppare il progetto è stato utilizzato il linguaggio UML (tramite l’utilizzo del software Visual Paradigm), per modellare il sistema e i diagrammi, secondo le specifiche del processo unificato.
 
