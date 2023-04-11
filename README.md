@@ -14,7 +14,7 @@ L’intento di questa piattaforma è quella di aiutare tutte le attività ad inc
 **Cliente**: Si iscrive/disiscrive alla piattaforma del programma fedeltà per poi aderire a uno o più programmi attivi e tramite un’area riservata può visualizzare lo storico acquisti, scrivere delle recensioni, fare nuovi acquisti e riscattare i vari premi e promozioni.<br>
 **Titolare**: Può creare uno o più programmi fedeltà (programma a punti, programma a livelli, servizi premium, ecc.), quindi associa al programma un catalogo che crea/modifica/elimina. Inoltre può visualizzare le statistiche dei vari programmi attivi.<br>
 **Commesso**: Identifica un cliente per poi registrarne gli acquisti e aggiorna la percentuale di avanzamento del livello del cliente ad ogni spesa nel caso in cui sia iscritto al programma a livelli.<br>
-**Assistenza cliente**: Aggiorna le informazioni inerenti lo spazio fedeltà di un’azienda e invia i messaggi promozionali ai clienti del programma.
+**Assistenza cliente**: Aggiorna le informazioni inerenti lo spazio fedeltà di un’azienda e invia i messaggi promozionali ai clienti del programma.<br>
 **Amministratore**: definisce i permessi di accesso delle varie tipologie di utenti a specifiche aree del sistema.<br>
 **Tempo**: verifica le date di scadenza dei programmi creati dal titolare.<br>
 
