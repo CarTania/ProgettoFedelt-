@@ -32,6 +32,7 @@ public class Catalogo {
      */
     public boolean inserisciPremio(Premio premio) {
         if (!(listapremi.contains(premio))) {
+            GestoreDB.inserisciPremio(premio);
             listapremi.add(premio);
             return true;
         }
