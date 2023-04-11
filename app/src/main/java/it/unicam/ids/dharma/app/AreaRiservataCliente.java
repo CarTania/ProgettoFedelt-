@@ -76,8 +76,10 @@ public class AreaRiservataCliente implements ICliente {
             for (ProgrammaFedelta p:
                  programmiTipologia) {
                 System.out.println(p);
+
             }
     }
+
 
 
     /**

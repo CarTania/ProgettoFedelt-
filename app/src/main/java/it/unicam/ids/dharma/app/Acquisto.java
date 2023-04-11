@@ -9,7 +9,7 @@ import java.util.Optional;
  * La classe rappresenta un acquisto effettuato da un cliente. E' composto da una lista di prodotti
  * acquistati in una data specifica.
  */
-public class Acquisto {
+public class Acquisto implements ElementoDB {
 
     private final LocalDate dataAcquisto;
 
@@ -24,7 +24,7 @@ public class Acquisto {
     }
 
     public boolean aggiungiProdotto(Prodotto prodotto) {
-        if(Magazzino.getMagazzino().getProdottiDisponibili().containsKey(prodotto)){
+        if(Magazzino.getMagazzino().getProdottiDisponibili().contains(prodotto)){
             Optional<Prodotto> prodottoDaAcquistare = Magazzino.getMagazzino().prelevaProdotto(prodotto);
             if(prodottoDaAcquistare.isPresent()){
                 this.listaProdotti.add(prodotto);

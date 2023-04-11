@@ -14,9 +14,16 @@ dependencies {
     implementation 'org.apache.commons:commons-text'
     implementation project(':utilities')
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.3'
+    implementation 'org.hibernate:hibernate-core:6.2.0.Final'
 }
 
 application {
     // Define the main class for the application.
-    mainClass = 'it.unicam.ids.dharma.app.App'
+    mainClass = 'it.unicam.ids.dharma.app.AppLoader'
 }
+
+
+
+
+
+

@@ -8,5 +8,6 @@ public interface ICommesso {
     public int inserisciCodice();
     public void identificaCliente();
 
+
     public void registraAcquisto(Cliente cliente, List<Prodotto> listaSpesa);
 }

@@ -13,6 +13,7 @@ public class ProgrammaFedelta implements ElementoDB {
     protected final LocalDate dataScadenza;
     protected boolean attivo;
 
+
     public ProgrammaFedelta(int id, LocalDate dataAttivazione, LocalDate dataScadenza) {
         this.id = id;
         this.dataAttivazione = dataAttivazione;

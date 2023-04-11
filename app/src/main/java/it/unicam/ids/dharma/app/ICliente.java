@@ -1,5 +1,6 @@
 package it.unicam.ids.dharma.app;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ICliente {
@@ -8,21 +9,18 @@ public interface ICliente {
      * E' possibile ricercare un programma effettuando una ricerca per azienda o per
      * tipologia di programma.
      */
-    public void cercaProgrammaFedelta();
-    public void apriMenuRicerca();
-    public void cercaPerAzienda(String nomeAzienda);
-    public Optional<ProgrammaFedelta> selezionaProgramma (int idProgramma);
-    public void cercaPerTipologia(String tipologia);
-    public void selezionaTipologiaProgramma(String tipologia);
-    public void mostraElencoProgrammiAzienda (String nomeAzienda);
-    public void mostraDettagliProgramma (int idProgramma);
-    public void mostraElencoProgrammiPerTipologia(String tipologia);
-    public void effettuaAcquisto() throws CloneNotSupportedException;
-    public void cronologiAcquisti();
-    public void visualizzaCatalogoPremi(int idProgramma);
-    public void riscattaVantaggioProgrammaPunti(ProgrammaPunti p, int punti);
-    public void riscattaPremio (Premio p, ProgrammaPunti programmaPunti);
-    public void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti);
 
+    void cercaProgrammaFedelta();
+    void apriMenuRicerca();
+    void cercaPerAzienda(String nomeAzienda);
+    void cercaPerTipologia(String tipologia);
+    void effettuaAcquisto();
+    void cronologiAcquisti();
+    void visualizzaCatalogoPremi();
+    void riscattaVantaggioProgrammaPunti(ProgrammaPunti p, int punti);
+    void riscattaPremio (Premio p, ProgrammaPunti programmaPunti);
+    void ottieniCouponSconto(ProgrammaPunti programmaPunti, int punti);
+    void attivaProgrammaPunti();
+    void iniziaSessione();
 }
 
