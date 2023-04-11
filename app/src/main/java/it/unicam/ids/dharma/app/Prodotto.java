@@ -72,7 +72,7 @@ public class Prodotto implements  ElementoDB {
 
     @Override
     public String toString() {
-        return "EntitaProdotto{" +
+        return "Prodotto{" +
             "id=" + id +
             ", nome='" + nome + '\'' +
             ", prezzo=" + prezzo +
