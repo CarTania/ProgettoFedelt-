@@ -5,9 +5,9 @@
 L’intento di questa piattaforma è quella di aiutare tutte le attività ad incrementare il tasso di fidelizzazione, per mantenere l’attuale clientela e acquisirne di nuova.
 
 <h3>Gli obiettivi principali sono:</h3>
- * Aumentare il fatturato<br>
- * Mantenere la clientela<br>
- * Ottenere nuova clientela<br>
+ > * Aumentare il fatturato<br>
+ > * Mantenere la clientela<br>
+ > * Ottenere nuova clientela<br>
 
 <h3>I soggetti all’interno del progetto sono:</h3>
 
