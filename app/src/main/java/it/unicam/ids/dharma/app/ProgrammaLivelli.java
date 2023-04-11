@@ -12,8 +12,8 @@ import java.util.*;
 public class ProgrammaLivelli<T extends VantaggioFedelta> extends ProgrammaFedelta {
     private final List<Livello<T>> livelliProgramma;
 
-    public ProgrammaLivelli(int id, int numlivelli, List<T> vantaggi, LocalDate dataScadenza) {
-        super(id, LocalDate.now(), Objects.requireNonNull(dataScadenza));
+    public ProgrammaLivelli(int numlivelli, List<T> vantaggi, LocalDate dataScadenza) {
+        super(IdGenerator.getGeneratoreId().riceviIdValido(), LocalDate.now(), Objects.requireNonNull(dataScadenza));
         this.livelliProgramma = inizializzaProgramma(Objects.requireNonNull(vantaggi), numlivelli);
     }
 
@@ -82,4 +82,6 @@ public class ProgrammaLivelli<T extends VantaggioFedelta> extends ProgrammaFedel
     public List<Livello<T>> getLivelliProgramma() {
         return livelliProgramma;
     }
+
+
 }

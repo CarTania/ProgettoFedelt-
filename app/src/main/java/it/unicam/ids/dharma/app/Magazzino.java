@@ -1,9 +1,6 @@
 package it.unicam.ids.dharma.app;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -11,15 +8,11 @@ import java.util.Set;
  */
 
 public class Magazzino {
-    private final Map<Prodotto, Integer> prodottiDisponibili;
-
+    private final List<Prodotto> prodottiDisponibili;
     private static Magazzino magazzino;
 
-    private static int ultimoIdProdotto;
-
     private Magazzino() {
-        prodottiDisponibili = new HashMap<>();
-        ultimoIdProdotto = 0;
+        prodottiDisponibili = new ArrayList<>();
     }
 
     public static Magazzino getMagazzino() {
@@ -28,7 +21,7 @@ public class Magazzino {
         return magazzino;
     }
 
-    public Map<Prodotto, Integer> getProdottiDisponibili() {
+    public List<Prodotto> getProdottiDisponibili() {
         return prodottiDisponibili;
     }
 
@@ -40,10 +33,10 @@ public class Magazzino {
      * @param quantita la quantità di quel prodotto da aggiungere.
      * @return il prodotto aggiunto.
      */
-    public Prodotto aggiungiProdotto(String nome, int prezzo, int quantita) {
-        Prodotto prodottoAggiunto = new Prodotto(nome, ultimoIdProdotto, prezzo);
-        prodottiDisponibili.put(prodottoAggiunto, quantita);
-        ultimoIdProdotto++;
+    public Prodotto aggiungiProdotto(String nome, double prezzo, int quantita) {
+        Prodotto prodottoAggiunto = new Prodotto(nome, prezzo, quantita);
+        prodottiDisponibili.add(prodottoAggiunto);
+        GestoreDB.inserisciProdotto(prodottoAggiunto);
         return prodottoAggiunto;
     }
 
@@ -53,8 +46,9 @@ public class Magazzino {
      * @param prodotto il prodotto da rimuovere.
      */
     public void rimuoviProdotto(Prodotto prodotto) {
-        if (prodottiDisponibili.containsKey(prodotto)) {
+        if (prodottiDisponibili.contains(prodotto)) {
             prodottiDisponibili.remove(prodotto);
+            GestoreDB.rimuoviProdotto(prodotto);
         } else
             throw new IllegalArgumentException("Il prodotto da rimuovere non è presente nel magazzino.");
     }
@@ -67,8 +61,11 @@ public class Magazzino {
      * @return true se la quantità è stata aumentata, false altrimenti.
      */
     public boolean aumentaQuantita(Prodotto prodotto, int quantitaAggiunta) {
-        if (prodottiDisponibili.containsKey(prodotto)) {
-            prodottiDisponibili.compute(prodotto, (p, q) -> q + quantitaAggiunta);
+        if (prodottiDisponibili.contains(prodotto)) {
+            GestoreDB.aumentaQuantitaProdotto(prodotto, quantitaAggiunta);
+            int indice = prodottiDisponibili.indexOf(prodotto);
+            int quantitaAggiornata = prodottiDisponibili.get(indice).getQuantita() + quantitaAggiunta;
+            prodottiDisponibili.get(indice).setQuantita(quantitaAggiornata);
             return true;
         }
         return false;
@@ -82,9 +79,12 @@ public class Magazzino {
      * @return true se la quantità è stata decrementata, false se il prodotto non è presente.
      */
     public boolean decrementaQuantita(Prodotto prodotto, int quantita) {
-        if (prodottiDisponibili.containsKey(prodotto)) {
-            if (quantita <= prodottiDisponibili.get(prodotto)) {
-                prodottiDisponibili.compute(prodotto, (p, q) -> q - quantita);
+        if (prodottiDisponibili.contains(prodotto)) {
+            int indice = prodottiDisponibili.indexOf(prodotto);
+            if (quantita <= prodottiDisponibili.get(indice).getQuantita()) {
+                GestoreDB.decrementaQuantitaProdotto(prodotto, quantita);
+                int quantitaAggiornata = prodottiDisponibili.get(indice).getQuantita() - quantita;
+                prodottiDisponibili.get(indice).setQuantita(quantitaAggiornata);
                 return true;
             } else
                 throw new IllegalArgumentException("La quantità da decrementare non può" +
@@ -102,8 +102,8 @@ public class Magazzino {
      */
 
     public Optional<Prodotto> ricercaProdotto(int id) {
-        for (Prodotto p : prodottiDisponibili.keySet()) {
-            if (p.getIdProdotto() == id) {
+        for (Prodotto p : prodottiDisponibili) {
+            if (p.getId() == id) {
                 return Optional.of(p);
             }
         }
@@ -119,7 +119,7 @@ public class Magazzino {
      */
 
     public Optional<Prodotto> ricercaProdotto(String nome) {
-        for (Prodotto p : prodottiDisponibili.keySet()) {
+        for (Prodotto p : prodottiDisponibili) {
             if (p.getNome().equals(nome)) {
                 return Optional.of(p);
             }
@@ -134,12 +134,14 @@ public class Magazzino {
      * @return il prodotto da prelevare, se esiste, altrimenti ritorna <code>Optional.empty()</code>.
      */
     public Optional<Prodotto> prelevaProdotto(Prodotto prodotto) {
-        if (prodottiDisponibili.containsKey(prodotto)) {
-            if (prodottiDisponibili.get(prodotto) > 0){
-                Set<Prodotto> prodotti = prodottiDisponibili.keySet();
-                for (Prodotto p : prodotti) {
+        if (prodottiDisponibili.contains(prodotto)) {
+            int indice = prodottiDisponibili.indexOf(prodotto);
+            if (prodottiDisponibili.get(indice).getQuantita() > 0){
+                for (Prodotto p : prodottiDisponibili) {
                     if (p.equals(prodotto)) {
-                        prodottiDisponibili.compute(p, (prod, q) -> q - 1);
+                        this.decrementaQuantita(p, 1);
+                        int quantitaAggiornata = prodottiDisponibili.get(indice).getQuantita();
+                        GestoreDB.aumentaQuantitaProdotto(p, quantitaAggiornata);
                         return Optional.of(p);
                     }
                 }
@@ -151,6 +153,5 @@ public class Magazzino {
 
     public void svuota(){
         this.prodottiDisponibili.clear();
-        Magazzino.ultimoIdProdotto = 0;
     }
 }

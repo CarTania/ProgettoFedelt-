@@ -1,7 +1,6 @@
 package it.unicam.ids.dharma.app;
 
 public class ServizioPremium implements VantaggioFedelta{
-
     private String nome;
     private String tipologia;
 

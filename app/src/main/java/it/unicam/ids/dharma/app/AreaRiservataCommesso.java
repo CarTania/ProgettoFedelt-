@@ -2,58 +2,65 @@ package it.unicam.ids.dharma.app;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Predicate;
 
 public class AreaRiservataCommesso  implements ICommesso{
 
     private Commesso commesso;
-    private List<Acquisto> AcquistiRegistrati ;
+
+    private List<Acquisto> acquistiRegistrati;
 
     public AreaRiservataCommesso(Commesso commesso) {
         this.commesso = commesso;
-        AcquistiRegistrati = new LinkedList<>();
+        this.acquistiRegistrati = new LinkedList<>();
     }
 
     @Override
     public int acquisisciId(Prodotto p) {
-        return p.getIdProdotto();
+
+        return p.getId();
+
     }
 
     @Override
     public int inserisciCodice() {
-        System.out.println("Inserisci il codice del prodotto");
+
+        System.out.println("Inserisci il codice del prodotto: ");
         Scanner s = new Scanner(System.in);
         return Integer.parseInt(s.nextLine());
     }
 
     /**
-     * Permette di identificare un cliente tramite l'id
-     * @param id è l'id inserito con cui il cliente viene riconosciuto
+
+     * Permette l'identificazione di un cliente tramite l'id.
      */
     @Override
-    public void identificaCliente(int id) {
+    public void identificaCliente() {
         Scanner s = new Scanner(System.in);
         String input ;
-        boolean condizioneVera = true;
-        while(condizioneVera) {
+        boolean identificazioneInCorso = true;
+        while(identificazioneInCorso) {
             System.out.println("Inserisci id cliente: ");
             input = s.nextLine();
-            if (Integer.parseInt(input) == id) {
+            if (GestoreDB.verificaPresenzaCliente(Integer.parseInt(input))) {
                 System.out.println("Informazioni cliente: ");
-                Predicate<Integer> p = i -> i == id;
-                Optional<List<ElementoDB>> listaProgrammi = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
-                Optional<List<ElementoDB>> listaAcquisti = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
-                if(listaProgrammi.isPresent() && listaAcquisti.isPresent()){
-                    for (ElementoDB elemento: listaProgrammi.get()) {
-                        System.out.println(elemento);
-                    }
-                    for (ElementoDB elemento: listaAcquisti.get()) {
-                        System.out.println(elemento);
+                List<ProgrammaFedelta> listaProgrammi =
+                    GestoreDB.ottieniProgrammiCliente(Integer.parseInt(input));
+
+                List<Acquisto> listaAcquisti =
+                    GestoreDB.ottieniAcquistiCliente(Integer.parseInt(input));
+                if(!listaProgrammi.isEmpty()){
+                    for (ProgrammaFedelta p: listaProgrammi) {
+                        System.out.println(p);
                     }
                 }
-             condizioneVera = false;
+                if (!listaAcquisti.isEmpty()){
+                    for (Acquisto a: listaAcquisti) {
+                        System.out.println(a);
+                    }
+                }
+             identificazioneInCorso = false;
             } else {
-                System.out.println("idCliente non valido: reinserisci l'id. ");
+                System.out.println("idCliente non valido: reinserisci l'id.");
             }
         }
     }
@@ -65,13 +72,15 @@ public class AreaRiservataCommesso  implements ICommesso{
      */
     public void registraAcquisto(Cliente cliente, List<Prodotto> listaSpesa){
         Acquisto acquisto = new Acquisto(LocalDate.now(), cliente);
-        for (Prodotto prodotto: listaSpesa) {
+
+        for (Prodotto prodotto : listaSpesa) {
             Optional<Prodotto> p = Magazzino.getMagazzino().ricercaProdotto(acquisisciId(prodotto));
             if(p.isPresent()){
                Prodotto prod = Magazzino.getMagazzino().prelevaProdotto(p.get()).get();
                 acquisto.aggiungiProdotto(prod);
             }
         }
-        this.AcquistiRegistrati.add(Objects.requireNonNull(acquisto));
+        this.acquistiRegistrati.add(Objects.requireNonNull(acquisto));
+
     }
 }

@@ -24,7 +24,7 @@ public class Acquisto implements ElementoDB {
     }
 
     public boolean aggiungiProdotto(Prodotto prodotto) {
-        if(Magazzino.getMagazzino().getProdottiDisponibili().containsKey(prodotto)){
+        if(Magazzino.getMagazzino().getProdottiDisponibili().contains(prodotto)){
             Optional<Prodotto> prodottoDaAcquistare = Magazzino.getMagazzino().prelevaProdotto(prodotto);
             if(prodottoDaAcquistare.isPresent()){
                 this.listaProdotti.add(prodotto);
