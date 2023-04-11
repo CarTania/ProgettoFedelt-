@@ -4,7 +4,6 @@
 
 plugins {
     id 'it.unicam.ids.dharma.java-application-conventions'
-    id 'java'
 }
 
 repositories {
@@ -20,5 +19,11 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'it.unicam.ids.dharma.app.App'
+    mainClass = 'it.unicam.ids.dharma.app.AppLoader'
 }
+
+
+
+
+
+
