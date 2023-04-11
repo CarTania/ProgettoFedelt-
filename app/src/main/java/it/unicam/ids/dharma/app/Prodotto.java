@@ -7,6 +7,7 @@ import java.util.Objects;
 /**
  * Rappresenta un prodotto venduto da un'azienda.
  */
+
 @Entity
 @Embeddable
 @Table(name = "prodotti")

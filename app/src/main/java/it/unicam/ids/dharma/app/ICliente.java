@@ -9,6 +9,7 @@ public interface ICliente {
      * E' possibile ricercare un programma effettuando una ricerca per azienda o per
      * tipologia di programma.
      */
+
     void cercaProgrammaFedelta();
     void apriMenuRicerca();
     void cercaPerAzienda(String nomeAzienda);

@@ -6,6 +6,7 @@ import java.util.*;
 public class AreaRiservataCommesso  implements ICommesso{
 
     private Commesso commesso;
+
     private List<Acquisto> acquistiRegistrati;
 
     public AreaRiservataCommesso(Commesso commesso) {
@@ -15,17 +16,21 @@ public class AreaRiservataCommesso  implements ICommesso{
 
     @Override
     public int acquisisciId(Prodotto p) {
+
         return p.getId();
+
     }
 
     @Override
     public int inserisciCodice() {
+
         System.out.println("Inserisci il codice del prodotto: ");
         Scanner s = new Scanner(System.in);
         return Integer.parseInt(s.nextLine());
     }
 
     /**
+
      * Permette l'identificazione di un cliente tramite l'id.
      */
     @Override
@@ -67,6 +72,7 @@ public class AreaRiservataCommesso  implements ICommesso{
      */
     public void registraAcquisto(Cliente cliente, List<Prodotto> listaSpesa){
         Acquisto acquisto = new Acquisto(LocalDate.now(), cliente);
+
         for (Prodotto prodotto : listaSpesa) {
             Optional<Prodotto> p = Magazzino.getMagazzino().ricercaProdotto(acquisisciId(prodotto));
             if(p.isPresent()){
@@ -75,5 +81,6 @@ public class AreaRiservataCommesso  implements ICommesso{
             }
         }
         this.acquistiRegistrati.add(Objects.requireNonNull(acquisto));
+
     }
 }

@@ -70,7 +70,7 @@ public class AreaRiservataCliente implements ICliente {
         //predicato che verifica l'uguaglianza con la stringa passata dall'utente.
         Predicate<String> matchNomeAzienda = n -> (n.equals(nomeAzienda));
         //il gestore dei programmi ritorna la lista dei programmi attivati da una determinata azienda.
-        Optional<List<ProgrammaFedelta>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchNomeAzienda);
+        Optional<List<ElementoDB>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchNomeAzienda);
     }
 
     /**
@@ -79,19 +79,20 @@ public class AreaRiservataCliente implements ICliente {
      * @param idProgramma è un intero che rappresenta l'id del programma fedeltà.
      */
     @Override
-    public Optional<ProgrammaFedelta> selezionaProgramma(int idProgramma) {
+    public Optional<ElementoDB> selezionaProgramma(int idProgramma) {
 
         Predicate<Integer> p = i -> i == idProgramma;
-
-        return GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
-
+        if(GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p).isPresent()) {
+            return GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
+        }
+        return Optional.empty();
     }
 
     @Override
     public void cercaPerTipologia(String tipologia) {
         Predicate<String> matchTipologia = n -> (n.equals(tipologia));
         //il gestore dei programmi ritorna la lista dei programmi attivati di una determinata tipologia.
-        Optional<List<ProgrammaFedelta>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchTipologia);
+        Optional<List<ElementoDB>> risultatoRicerca = getGestoreProgrammi().ottieniElenco(matchTipologia);
     }
 
 
@@ -103,7 +104,7 @@ public class AreaRiservataCliente implements ICliente {
     @Override
     public void selezionaTipologiaProgramma(String tipologia) {
         Predicate<String> p = t -> t.equals(tipologia);
-        Optional<ProgrammaFedelta> programmaSelezionato = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
+        Optional<ElementoDB> programmaSelezionato = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElemento(p);
     }
 
     /**
@@ -115,9 +116,9 @@ public class AreaRiservataCliente implements ICliente {
     @Override
     public void mostraElencoProgrammiAzienda(String nomeAzienda) {
         Predicate<String> p = t -> t.equals(nomeAzienda);
-        Optional<List<ProgrammaFedelta>> elencoProgrammi = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
+        Optional<List<ElementoDB>> elencoProgrammi = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
         if (elencoProgrammi.isPresent()) {
-            for (ProgrammaFedelta programma : elencoProgrammi.get()) {
+            for (ElementoDB programma : elencoProgrammi.get()) {
                 System.out.println(programma);
             }
         }
@@ -126,7 +127,7 @@ public class AreaRiservataCliente implements ICliente {
     @Override
     public void mostraDettagliProgramma(int idProgramma) {
 
-        Optional<ProgrammaFedelta> programma = this.selezionaProgramma(idProgramma);
+        Optional<ElementoDB> programma = this.selezionaProgramma(idProgramma);
         programma.ifPresent(System.out::println);
     }
 
@@ -134,9 +135,9 @@ public class AreaRiservataCliente implements ICliente {
     @Override
     public void mostraElencoProgrammiPerTipologia(String tipologia) {
         Predicate<String> p = t -> t.equals(tipologia);
-        Optional<List<ProgrammaFedelta>> elencoProgrammi = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
+        Optional<List<ElementoDB>> elencoProgrammi = GestoreProgrammiFedelta.getGestoreProgrammi().ottieniElenco(p);
         if (elencoProgrammi.isPresent()) {
-            for (ProgrammaFedelta programma : elencoProgrammi.get()) {
+            for (ElementoDB programma : elencoProgrammi.get()) {
                 System.out.println(programma);
             }
         }
@@ -144,7 +145,7 @@ public class AreaRiservataCliente implements ICliente {
     }
 
     /**
-     * Il metodo permette di effettuare un acquisto dal magazzino.
+     * Il metodo permette di effettuare un acquisto dal magazzino online.
      * Il metodo prende in input i nomi dei prodotti inseriti dal cliente e se presenti li aggiunge ad un nuovo acquisto.
      * L'acquisto viene aggiunto agli acquisti effettuati dal cliente.
      */
